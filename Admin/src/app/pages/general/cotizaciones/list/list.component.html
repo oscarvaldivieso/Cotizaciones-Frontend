@@ -1,0 +1,180 @@
+<!-- Custom Breadcrumb Header -->
+<app-breadcrumbs [title]="'Cotizaciones'" [icon]="'ri-file-list-3-line'" [badgeIcon]="'ri-file-text-line'"
+    [badgeCount]="cotizaciones.length" [breadcrumbItems]="[
+    { label: 'General' },
+    { label: 'Cotizaciones', active: true }
+  ]">
+</app-breadcrumbs>
+
+<div class="row">
+    <div class="col-lg">
+        <!-- Toolbar: Button + Search -->
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row align-items-center justify-content-between gy-2">
+                    <!-- Left: New Button -->
+                    <div class="col-md-auto">
+                        <a routerLink="/general/cotizaciones/create" class="btn btn-primary">
+                            <i class="ri-add-line align-baseline me-1"></i> Nueva Cotización
+                        </a>
+                    </div>
+
+                    <!-- Right: Search -->
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" placeholder="Buscar por número, cliente o seguro..."
+                            [(ngModel)]="searchTerm">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error Alert -->
+        <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+            <i class="ri-error-warning-line me-2"></i>
+            <strong>Error:</strong> {{ errorMessage }}
+            <button type="button" class="btn-close" (click)="errorMessage = ''"></button>
+        </div>
+
+        <!-- Loading State -->
+        <div *ngIf="isLoading" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Cargando...</span>
+            </div>
+            <p class="text-muted mt-3">Cargando cotizaciones...</p>
+        </div>
+
+        <!-- Cards Grid -->
+        <div class="row" id="cotizaciones-list" *ngIf="!isLoading">
+            <div class="col-xxl-4 col-lg-6 col-md-6" *ngFor="let cotizacion of filteredCotizaciones(); let i = index">
+                <div class="card real-estate-grid-widgets card-animate">
+                    <div class="card-body">
+                        <!-- Header with Number and Actions -->
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h5 class="card-title mb-1">{{ cotizacion.coti_Numero }}</h5>
+                                <p class="text-muted mb-0">
+                                    <i class="ri-calendar-line align-baseline me-1"></i>
+                                    {{ cotizacion.fechaFormateada }}
+                                </p>
+                            </div>
+                            <div dropdown class="dropdown">
+                                <button dropdownToggle class="btn btn-light btn-icon btn-sm" type="button">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                                <ul *bsDropdownMenu class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" href="javascript:void(0);">
+                                            <i class="bi bi-eye me-1 align-baseline"></i>Ver detalles
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="javascript:void(0);">
+                                            <i class="bi bi-pencil-square me-1 align-baseline"></i>Editar
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item text-danger" href="javascript:void(0);"
+                                            (click)="eliminarCotizacion(cotizacion.coti_Id)">
+                                            <i class="bi bi-trash3 me-1 align-baseline"></i>Eliminar
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Cliente Info -->
+                        <div class="mb-3">
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="avatar-xs me-2">
+                                    <div class="avatar-title bg-primary-subtle text-primary rounded-circle">
+                                        <i class="ri-user-line"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-0 text-truncate">{{ cotizacion.clie_Nombre }}</h6>
+                                    <small class="text-muted">{{ cotizacion.tipoCliente }}</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tipo de Seguro -->
+                        <div class="mb-3">
+                            <span class="badge bg-info-subtle text-info fs-xs">
+                                <i class="ri-shield-check-line align-baseline me-1"></i>{{ cotizacion.tipoSeguro }}
+                            </span>
+                        </div>
+
+                        <!-- Descripción del Bien -->
+                        <p class="text-muted mb-3 text-truncate" style="max-height: 40px; overflow: hidden;">
+                            <i class="ri-file-text-line align-baseline me-1"></i>
+                            {{ cotizacion.coti_DescripcionBien }}
+                        </p>
+
+                        <!-- Montos -->
+                        <div class="row g-2 mb-3">
+                            <div class="col-6">
+                                <div class="border rounded p-2">
+                                    <p class="text-muted mb-0 fs-xs">Suma Asegurada</p>
+                                    <h6 class="mb-0 text-primary">{{ cotizacion.sumaAseguradaFormateada }}</h6>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="border rounded p-2">
+                                    <p class="text-muted mb-0 fs-xs">Prima Neta</p>
+                                    <h6 class="mb-0 text-success">{{ cotizacion.primaNetaFormateada }}</h6>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tasa -->
+                        <div class="mb-3">
+                            <small class="text-muted">
+                                <i class="ri-percent-line align-baseline me-1"></i>
+                                Tasa: <strong>{{ cotizacion.tasaFormateada }}</strong>
+                            </small>
+                        </div>
+
+                        <!-- Estado del Correo -->
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge fs-xs" [ngClass]="getCorreoBadgeClass(cotizacion.coti_CorreoEnviado)">
+                                <i [class]="getCorreoIcon(cotizacion.coti_CorreoEnviado) + ' align-baseline me-1'"></i>
+                                {{ cotizacion.correoEnviadoTexto }}
+                            </span>
+                            <small class="text-muted">
+                                <i class="ri-money-dollar-circle-line align-baseline me-1"></i>
+                                {{ cotizacion.mone_Codigo }}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--end row-->
+
+        <!-- No Results -->
+        <div *ngIf="filteredCotizaciones().length === 0 && !isLoading" class="text-center py-4">
+            <div class="avatar-md mx-auto mb-4">
+                <div class="avatar-title bg-light text-primary rounded-circle fs-4xl">
+                    <i class="bi bi-search"></i>
+                </div>
+            </div>
+            <h5 class="mt-2">{{ searchTerm ? 'No hay cotizaciones que coincidan con la búsqueda' : 'No hay cotizaciones
+                para
+                mostrar' }}</h5>
+        </div>
+
+        <!-- Pagination Info -->
+        <div class="row align-items-center mb-4 justify-content-between text-center text-sm-start"
+            *ngIf="!isLoading && cotizaciones.length > 0">
+            <div class="col-sm">
+                <div class="text-muted">
+                    Mostrando <span class="fw-semibold">{{ filteredCotizaciones().length }}</span> de <span
+                        class="fw-semibold">{{
+                        cotizaciones.length }}</span> cotizaciones
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,127 @@
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title mb-0">
+            <i class="ri-file-add-line me-2"></i>Crear Nueva Cotización
+        </h5>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="cotizacionForm" (ngSubmit)="crearCotizacion()">
+            <div class="row">
+
+                <!-- Cliente -->
+                <div class="col-md-6 mb-3">
+                    <label for="clie_Id" class="form-label">
+                        Cliente <span class="text-danger">*</span>
+                    </label>
+                    <ng-select [items]="clientes" bindLabel="clie_Nombre" bindValue="clie_Id" formControlName="clie_Id"
+                        placeholder="Seleccione un cliente" [clearable]="false" id="clie_Id">
+                        <ng-template ng-option-tmp let-item="item">
+                            <div class="d-flex flex-column">
+                                <span class="fw-semibold">{{ item.clie_Nombre }}</span>
+                                <small class="text-muted">{{ item.clie_Identidad }} - {{ item.tipoCliente }}</small>
+                            </div>
+                        </ng-template>
+                    </ng-select>
+                    <div *ngIf="submit && form['clie_Id'].errors" class="text-danger mt-1">
+                        <small *ngIf="form['clie_Id'].errors['required']">El cliente es requerido</small>
+                    </div>
+                </div>
+
+                <!-- Tipo de Seguro -->
+                <div class="col-md-6 mb-3">
+                    <label for="tiSe_Id" class="form-label">
+                        Tipo de Seguro <span class="text-danger">*</span>
+                    </label>
+                    <ng-select [items]="tiposSeguro" bindLabel="tiSe_Nombre" bindValue="tiSe_Id"
+                        formControlName="tiSe_Id" placeholder="Seleccione un tipo de seguro" [clearable]="false"
+                        id="tiSe_Id">
+                        <ng-template ng-option-tmp let-item="item">
+                            <div class="d-flex flex-column">
+                                <span class="fw-semibold">{{ item.tiSe_Nombre }}</span>
+                                <small class="text-muted">{{ item.tiSe_Descripcion }}</small>
+                            </div>
+                        </ng-template>
+                    </ng-select>
+                    <div *ngIf="submit && form['tiSe_Id'].errors" class="text-danger mt-1">
+                        <small *ngIf="form['tiSe_Id'].errors['required']">El tipo de seguro es requerido</small>
+                    </div>
+                </div>
+
+                <!-- Moneda -->
+                <div class="col-md-6 mb-3">
+                    <label for="mone_Id" class="form-label">
+                        Moneda <span class="text-danger">*</span>
+                    </label>
+                    <ng-select [items]="monedas" bindLabel="mone_Nombre" bindValue="mone_Id" formControlName="mone_Id"
+                        placeholder="Seleccione una moneda" [clearable]="false" id="mone_Id">
+                        <ng-template ng-option-tmp let-item="item">
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-primary-subtle text-primary me-2">{{ item.mone_Codigo }}</span>
+                                <span>{{ item.mone_Nombre }} ({{ item.mone_Simbolo }})</span>
+                            </div>
+                        </ng-template>
+                    </ng-select>
+                    <div *ngIf="submit && form['mone_Id'].errors" class="text-danger mt-1">
+                        <small *ngIf="form['mone_Id'].errors['required']">La moneda es requerida</small>
+                    </div>
+                </div>
+
+                <!-- Suma Asegurada -->
+                <div class="col-md-6 mb-3">
+                    <label for="coti_SumaAsegurada" class="form-label">
+                        Suma Asegurada <span class="text-danger">*</span>
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="ri-money-dollar-circle-line"></i>
+                        </span>
+                        <input type="number" class="form-control" id="coti_SumaAsegurada"
+                            formControlName="coti_SumaAsegurada" placeholder="Ingrese la suma asegurada" min="1"
+                            step="0.01" [class.is-invalid]="submit && form['coti_SumaAsegurada'].errors">
+                    </div>
+                    <div *ngIf="submit && form['coti_SumaAsegurada'].errors" class="text-danger mt-1">
+                        <small *ngIf="form['coti_SumaAsegurada'].errors['required']">La suma asegurada es
+                            requerida</small>
+                        <small *ngIf="form['coti_SumaAsegurada'].errors['min']">La suma asegurada debe ser mayor a
+                            0</small>
+                    </div>
+                </div>
+
+                <!-- Descripción del Bien -->
+                <div class="col-12 mb-3">
+                    <label for="coti_DescripcionBien" class="form-label">
+                        Descripción del Bien Asegurado <span class="text-danger">*</span>
+                    </label>
+                    <textarea class="form-control" id="coti_DescripcionBien" formControlName="coti_DescripcionBien"
+                        rows="4" placeholder="Describa el bien o servicio a asegurar..."
+                        [class.is-invalid]="submit && form['coti_DescripcionBien'].errors"></textarea>
+                    <div *ngIf="submit && form['coti_DescripcionBien'].errors" class="text-danger mt-1">
+                        <small *ngIf="form['coti_DescripcionBien'].errors['required']">La descripción es
+                            requerida</small>
+                        <small *ngIf="form['coti_DescripcionBien'].errors['minlength']">
+                            La descripción debe tener al menos 10 caracteres
+                        </small>
+                    </div>
+                    <small class="text-muted">
+                        {{ form['coti_DescripcionBien'].value?.length || 0 }} caracteres
+                    </small>
+                </div>
+
+            </div>
+
+            <!-- Botones -->
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="d-flex justify-content-end gap-2">
+                        <button type="button" class="btn btn-light" (click)="cancelar()">
+                            <i class="ri-close-line me-1"></i>Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="ri-save-line me-1"></i>Guardar Cotización
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

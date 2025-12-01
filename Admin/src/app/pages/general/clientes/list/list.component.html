@@ -1,386 +1,158 @@
-<!-- Start Breadcrumbs -->
-<!-- <app-breadcrumbs title="List View" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs> -->
-<!-- End Breadcrumbs -->
+<!-- Custom Breadcrumb Header -->
+<app-breadcrumbs [title]="'Clientes'" [icon]="'ri-user-line'" [badgeIcon]="'ri-team-line'" [badgeCount]="Cliente.length"
+    [breadcrumbItems]="[
+    { label: 'General' },
+    { label: 'Clientes', active: true }
+  ]">
+</app-breadcrumbs>
 
-<div id="instructorList">
-
-
-    <div class="row">
-        <div *ngIf="!showCreate && !showEdit" class="col-lg-12" @collapse>
-            <div class="card">
-                <div class="card-header">
-                    <div class="row align-items-center g-2">
-                        <div class="col-12 d-flex justify-content-center align-items-center py-3">
-                            <h3 class="card-title mb-0 text-center">
-                                LISTA DE CLIENTES
-                                <span class="badge bg-primary ms-1 align-baseline">{{Cliente.length}}</span>
-                            </h3>
-                        </div>                        
-                        
-                        <div class="col-sm-auto">
-                            <div class="hstack gap-2">
-                                <button class="btn btn-subtle-danger d-none" id="remove-actions"><i
-                                        class="ri-delete-bin-2-line"></i></button>
-                                <a (click)="toggleCreate()" class="btn btn-secondary"><i
-                                        class="bi bi-plus-circle align-baseline me-1"></i> Agregar Cliente</a>
-                            </div>
-                            <div class="collapse" id="collapseEjemplo">
-                                <div class="card card-body">
-                                    <app-create></app-create>
-                                </div>
-                            </div>
-                        </div><!--end col-->
+<div class="row">
+    <div class="col-lg">
+        <!-- Toolbar: Button + Search -->
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row align-items-center justify-content-between gy-2">
+                    <!-- Left: New Button -->
+                    <div class="col-md-auto">
+                        <a (click)="toggleCreate()" class="btn btn-primary">
+                            <i class="ri-add-line align-baseline me-1"></i> Nuevo Cliente
+                        </a>
                     </div>
-                </div>
-                <div class="card-body mt-3">
-                    <div class="table-responsive table-card">
-                        <table class="table table-centered align-middle table-custom-effect table-nowrap mb-0">
-                            <thead class="table-light">
-                                <tr>
 
-                                    <th scope="col">Acciones</th>
-                                    <th scope="col" class="sort cursor-pointer">Cliente</th>
-                                    <th scope="col" class="sort cursor-pointer">Fecha de Nacimiento</th>
-                                    <th scope="col" class="sort cursor-pointer">Sexo</th>
-                                    <th scope="col" class="sort cursor-pointer">Estado civil</th>
-                                    <th scope="col" class="sort cursor-pointer">Dirección</th>
-                                    <th scope="col" class="sort cursor-pointer">Teléfono</th>
-                                    <th scope="col" class="sort cursor-pointer">Municipio</th>
-                                </tr>
-                            </thead>
-                            <tbody class="list form-check-all">
-                                <tr *ngFor="let cliente of Cliente">
-                                    <td>
-                                        <ul class="d-flex gap-2 list-unstyled mb-0">
-                                            <li>
-                                                <a [routerLink]="['/general/clientes/details', cliente.clie_Id]"
-                                                    class="btn btn-subtle-primary btn-icon btn-sm "><i
-                                                        class="ph-eye"></i></a>
-                                            </li>
-                                            <li>
-                                                <button href="javascript:void(0);" (click)="editarCliente(cliente)"
-                                                    class="btn btn-subtle-secondary btn-icon btn-sm edit-item-btn"><i
-                                                        class="ph-pencil"></i></button>
-                                            </li>
-                                            <li>
-                                                <button href="javascript:void(0);" (click)="eliminarCliente(cliente.clie_Id)"
-                                                    class="btn btn-subtle-danger btn-icon btn-sm remove-item-btn"><i class="ph-trash"></i></button>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                    <td class="instructor" name="clie_Nombres">
-                                        <div class="d-flex gap-2 align-items-center">
-                                            <div class="flex-shrink-0">
-                                                <img src="../../../../../assets/images/users/avatar-5.jpg" alt=""
-                                                    class="avatar-xxs rounded-circle">
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <a routerLink="/learning/instructors-overview"
-                                                    class="text-reset">{{cliente.clie_Nombres}}
-                                                    {{cliente.clie_Apellidos}}</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td name="clie_FechaNacimiento" class="email">{{cliente.clie_FechaNacimiento}}</td>
-                                    <td name="clie_Sexo" class="experience">{{cliente.clie_Sexo}}</td>
-                                    <td name="esCi_Nombre" class="students">{{cliente.esCi_Nombre}}</td>
-                                    <td name="clie_Direccion" class="contact">{{cliente.clie_Direccion}}</td>
-                                    <td name="clie_Telefono" class="contact">{{cliente.clie_Telefono}}</td>
-                                    <td name="muni_Nombre" class="contact">{{cliente.muni_Nombre}}</td>
-
-
-                                </tr>
-                            </tbody><!-- end tbody -->
-                        </table><!-- end table -->
-
-                        <!-- <div id="elmLoader">
-                            <div class="spinner-border text-primary avatar-sm" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </div> -->
-                    </div>
-                    <div class="row align-items-center mt-4 pt-3" id="pagination-element">
-                        <div class="col-sm">
-                            <div class="text-muted text-center text-sm-start">
-                                Showing <span class="fw-semibold">2</span> of <span class="fw-semibold"></span>
-                                Results
-                            </div>
-                        </div><!--end col-->
-                        <div class="col-sm-auto mt-3 mt-sm-0">
-                            <!-- <pagination class="pagination-wrap hstack justify-content-center gap-2"></pagination> -->
-                        </div><!--end col-->
-                    </div><!--end row-->
-                </div>
-            </div>
-        </div><!--end col-->
-    </div><!--end row-->
-    <div *ngIf="showCreate" @collapse>
-        <app-create (cancelar)="cancelCreate()"></app-create>
-    </div>
-    <div *ngIf="showEdit" @collapse>
-        <app-edit
-          [cliente]="clienteSeleccionado"
-          (cancelar)="cancelEdit()"
-          (actualizado)="recargarLista()"
-        ></app-edit>
-      </div>
-</div>
-
-<!-- <div id="instructorList">
-
-
-    <div class="row">
-        <div *ngIf="!showCreate && !showEdit" class="col-lg-12" @collapse>
-            <div class="card">
-                <div class="card-header">
-                    <div class="row align-items-center g-2">
-                        <div class="col-lg-3 me-auto">
-                            <h6 class="card-title mb-0">Lista de clientes <span
-                                    class="badge bg-primary ms-1 align-baseline">235</span></h6>
-                        </div>end col-->
-                        <!-- <div class="col-xl-2 col-lg-3 col-sm-5">
-                            <div class="search-box"> -->
-                                <!-- <input type="text" class="form-control search" placeholder="Search for instructors, email, contact number or something..." [(ngModel)]="term" (keyup)="filterdata()"> -->
-                                <!-- <i class="ri-search-line search-icon"></i>
-                            </div>
-                        </div><!-end col-->
-                        <!-- <div class="col-sm-auto">
-                            <div class="hstack gap-2">
-                                <button class="btn btn-subtle-danger d-none" id="remove-actions"><i
-                                        class="ri-delete-bin-2-line"></i></button>
-                                <a (click)="toggleCreate()" class="btn btn-secondary"><i
-                                        class="bi bi-plus-circle align-baseline me-1"></i> Agregar Cliente</a>
-                            </div>
-                            <div class="collapse" id="collapseEjemplo">
-                                <div class="card card-body">
-                                    <app-create></app-create>
-                                </div>
-                            </div> 
-                        </div>end col -->
-                    <!-- </div>
-                </div>
-                <div class="card-body mt-3">
-                    <div class="table-responsive table-card">
-                        <table class="table table-centered align-middle table-custom-effect table-nowrap mb-0">
-                            <thead class="table-light">
-                                <tr>
-
-                                    <th scope="col">Acciones</th>
-                                    <th scope="col" class="sort cursor-pointer">Cliente</th>
-                                    <th scope="col" class="sort cursor-pointer">Fecha de nacimiento</th>
-                                    <th scope="col" class="sort cursor-pointer">Sexo</th>
-                                    <th scope="col" class="sort cursor-pointer">Estado civil</th>
-                                    <th scope="col" class="sort cursor-pointer">Direccion</th>
-                                    <th scope="col" class="sort cursor-pointer">Telefono</th>
-                                    <th scope="col" class="sort cursor-pointer">Municipio</th>
-                                </tr>
-                            </thead>
-                            <tbody class="list form-check-all">
-                                <tr *ngFor="let cliente of Cliente">
-                                    <td>
-                                        <ul class="d-flex gap-2 list-unstyled mb-0">
-                                            <li>
-                                                <a routerLink="/learning/instructors-overview"
-                                                    class="btn btn-subtle-primary btn-icon btn-sm "><i
-                                                        class="ph-eye"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0);"
-                                                    class="btn btn-subtle-secondary btn-icon btn-sm edit-item-btn"><i
-                                                        class="ph-pencil"></i></a>
-                                            </li>
-                                            <li>
-                                                <button href="javascript:void(0);" (click)="eliminarCliente(cliente.clie_Id)"
-                                                    class="btn btn-subtle-danger btn-icon btn-sm remove-item-btn"><i class="ph-trash"></i></button>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                    <td class="instructor" name="clie_Nombres">
-                                        <div class="d-flex gap-2 align-items-center">
-                                            <div class="flex-shrink-0">
-                                                <img src="../../../../../assets/images/users/avatar-5.jpg" alt=""
-                                                    class="avatar-xxs rounded-circle">
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <a routerLink="/learning/instructors-overview"
-                                                    class="text-reset">{{cliente.clie_Nombres}}
-                                                    {{cliente.clie_Apellidos}}</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td name="clie_FechaNacimiento" class="email">{{cliente.clie_FechaNacimiento}}</td>
-                                    <td name="clie_Sexo" class="experience">{{cliente.clie_Sexo}}</td>
-                                    <td name="esCi_Nombre" class="students">{{cliente.esCi_Nombre}}</td>
-                                    <td name="clie_Direccion" class="contact">{{cliente.clie_Direccion}}</td>
-                                    <td name="clie_Telefono" class="contact">{{cliente.clie_Telefono}}</td>
-                                    <td name="muni_Nombre" class="contact">{{cliente.muni_Nombre}}</td>
-
-
-                                </tr>
-                            </tbody> -->
-                        <!-- </table> -->
-
-                        <!-- <div id="elmLoader">
-                            <div class="spinner-border text-primary avatar-sm" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </div> -->
-                    <!-- </div>
-                    <div class="row align-items-center mt-4 pt-3" id="pagination-element">
-                        <div class="col-sm">
-                            <div class="text-muted text-center text-sm-start">
-                                Showing <span class="fw-semibold">2</span> of <span class="fw-semibold"></span>
-                                Results
-                            </div>
-                        </div>
-                        <div class="col-sm-auto mt-3 mt-sm-0"> -->
-                            <!-- <pagination class="pagination-wrap hstack justify-content-center gap-2"></pagination> -->
-                        <!-- </div>
+                    <!-- Right: Search -->
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" placeholder="Buscar por nombre o identidad..."
+                            [(ngModel)]="searchTerm">
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div *ngIf="showCreate" @collapse>
-        <app-create (cancelar)="cancelCreate()"></app-create>
-    </div>
 
-</div>  -->
+        <!-- Error Alert -->
+        <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+            <i class="ri-error-warning-line me-2"></i>
+            <strong>Error:</strong> {{ errorMessage }}
+            <button type="button" class="btn-close" (click)="errorMessage = ''"></button>
+        </div>
 
-
-
-<!-- Modals
-<div bsModal #addInstructor="bs-modal" class="modal fade" id="addInstructor">
-    <div class="modal-dialog">
-        <div class="modal-content border-0">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addInstructorModalLabel">Add Instructor</h5>
-                <button type="button" class="btn-close" (click)="addInstructor.hide()"></button>
+        <!-- Loading State -->
+        <div *ngIf="isLoading" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Cargando...</span>
             </div>
+            <p class="text-muted mt-3">Cargando clientes...</p>
+        </div>
 
-            <form (ngSubmit)="saveList()" [formGroup]="ListForm" class="tablelist-form" novalidate autocomplete="off">
-                <div class="modal-body">
-                    <div id="alert-error-msg" class="d-none alert alert-danger py-2"></div>
-                    <input type="hidden" id="id-field">
-                    <input type="hidden" id="rating-field">
-                    <div class="mb-3">
-                        <label class="form-label">Instructor Image<span class="text-danger">*</span></label>
-                        <dropzone class="dropzone" [config]="dropzoneConfig" [message]="'Drop files here or click to upload.'" (success)="onUploadSuccess($event)"></dropzone>
-                        @if (uploadedFiles) {
-                        <ul class="list-unstyled mb-0" id="dropzone-preview">
-                            @for (file of uploadedFiles; track $index) {
-                            <li class="mt-2" id="dropzone-preview-list">
-                                <div class="border rounded">
-                                    <div class="d-flex flex-wrap gap-2 p-2">
-                                        <div class="flex-shrink-0 me-3">
-                                            <div class="avatar-sm bg-light rounded p-2">
-                                                @if (file.dataURL) {
-                                                    <img class="img-fluid rounded d-block" [src]="file.dataURL" alt="Dropzone-Image" />
-                                                }@else {
-                                                    <img class="img-fluid rounded d-block" [src]="file" alt="Dropzone-Image" />
-                                                }                                           
-                                            </div>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <div class="pt-1">
-                                                @if (file.name) {<h5 class="fs-md mb-1">{{ file.name }}</h5>}
-                                                @if (file.size) {<p class="fs-sm text-muted mb-0">{{ file.size }}</p>}
-                                            </div>
-                                        </div>
-                                        <div class="flex-shrink-0 ms-3">
-                                            <button (click)="removeFile(file)" class="btn btn-sm btn-danger">Delete</button>
-                                        </div>
-                                    </div>
+        <!-- Create/Edit Forms -->
+        <div *ngIf="showCreate" class="mb-3">
+            <app-create (cancelar)="cancelCreate()"></app-create>
+        </div>
+
+        <div *ngIf="showEdit && clienteSeleccionado" class="mb-3">
+            <app-edit [cliente]="clienteSeleccionado" (cancelar)="cancelEdit()" (actualizado)="recargarLista()">
+            </app-edit>
+        </div>
+
+        <!-- Cards Grid -->
+        <div class="row" id="clientes-list" *ngIf="!isLoading && !showCreate && !showEdit">
+            <div class="col-xxl-3 col-lg-4 col-md-6" *ngFor="let cliente of filteredClientes(); let i = index">
+                <div class="card real-estate-grid-widgets card-animate">
+                    <div class="card-body p-2">
+                        <!-- Avatar por defecto -->
+                        <div class="d-flex justify-content-center align-items-center bg-light rounded"
+                            style="height: 180px">
+                            <div class="avatar-xl">
+                                <div class="avatar-title bg-primary-subtle text-primary rounded-circle fs-2">
+                                    <i class="ri-user-line"></i>
                                 </div>
-                            </li>
-                        }
-                        </ul>
-                        }
-                    </div>
-
-                    <div class="row">
-
-                        <div class="col-lg-12">
-                            <div class="mb-3">
-                                <label for="instructor-name-input" class="form-label">Instructor Name<span class="text-danger">*</span></label>
-                                <input type="text" id="instructor-name-input" class="form-control" formControlName="name" placeholder="Enter instructor name" required>
                             </div>
                         </div>
+                        <div dropdown class="dropdown dropdown-real-estate">
+                            <button dropdownToggle class="btn btn-light btn-icon btn-sm" type="button"> <i
+                                    class="bi bi-three-dots-vertical"></i> </button>
+                            <ul *bsDropdownMenu class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item edit-list" href="javascript:void(0);"
+                                        [routerLink]="['/general/clientes/details', cliente.clie_Id]"><i
+                                            class="bi bi-eye me-1 align-baseline"></i>
+                                        Ver detalles</a></li>
+                                <li><a class="dropdown-item edit-list" href="javascript:void(0);"
+                                        (click)="editarCliente(cliente)"><i
+                                            class="bi bi-pencil-square me-1 align-baseline"></i>
+                                        Editar</a></li>
+                                <li><a class="dropdown-item remove-list" href="javascript:void(0);"
+                                        (click)="eliminarCliente(cliente.clie_Id)"><i
+                                            class="bi bi-trash3 me-1 align-baseline"></i>
+                                        Eliminar</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-body p-3">
+                        <span class="badge bg-primary-subtle text-primary fs-xxs mb-3">
+                            <i class="ri-user-line align-baseline me-1"></i>{{ cliente.clie_Identidad }}
+                        </span>
+                        <a [routerLink]="['/general/clientes/details', cliente.clie_Id]"
+                            class="text-dark text-decoration-none">
+                            <h6 class="fs-lg text-capitalize text-truncate">{{ cliente.clie_Nombre }}</h6>
+                        </a>
 
-                        <div class="col-lg-12">
-                            <div class="mb-3">
-                                <label for="email-input" class="form-label">Email<span class="text-danger">*</span></label>
-                                <input type="email" id="email-input" class="form-control" formControlName="email" placeholder="Email" required>
-                            </div>
+                        <!-- Tipo de Cliente -->
+                        <p class="text-muted mb-2">
+                            <i class="bi bi-person-badge align-baseline me-1"></i> {{ cliente.tipoCliente || 'Sin tipo'
+                            }}
+                        </p>
 
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label for="total-courses-input" class="form-label">Total Courses<span class="text-danger">*</span></label>
-                                <input type="number" id="total-courses-input" class="form-control" formControlName="total_course" placeholder="Total courses" required>
-                            </div>
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label for="experience-input" class="form-label">Experience<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="experience-input" placeholder="Experience" formControlName="experience" required>
-                            </div>
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label for="students-input" class="form-label">Students</label>
-                                <input type="number" id="students-input" class="form-control" placeholder="Students" formControlName="students" required>
-                            </div>
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label for="contact-input" class="form-label">Contact<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="contact-input" placeholder="Contact no" formControlName="contact" required>
-                            </div>
-                        <div class="col-lg-12">
-                            <div class="mb-3">
-                                <label for="status-input" class="form-label">Status<span class="text-danger">*</span></label>
+                        <!-- Teléfono -->
+                        <p class="text-muted mb-2" *ngIf="cliente.clie_Telefono">
+                            <i class="bi bi-telephone align-baseline me-1"></i> {{ cliente.clie_Telefono }}
+                        </p>
 
-                                <select class="form-select" id="status-input" formControlName="status">
-                                    <option value="">Select Status</option>
-                                    <option value="Active">Active</option>
-                                    <option value="Unactive">Unactive</option>
-                                </select>
-                            </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="hstack gap-2 justify-content-end">
-                        <button type="button" class="btn btn-ghost-danger" (click)="addInstructor.hide()"><i class="bi bi-x-lg align-baseline me-1"></i> Close</button>
-                        <button type="submit" class="btn btn-primary" id="add-btn">Add Instructor</button>
+                        <!-- Correo Electrónico -->
+                        <p class="text-muted mb-2 text-truncate" *ngIf="cliente.clie_CorreoElectronico">
+                            <i class="bi bi-envelope align-baseline me-1"></i> {{ cliente.clie_CorreoElectronico }}
+                        </p>
+
+                        <!-- Estado -->
+                        <div class="mb-2">
+                            <span class="badge" [ngClass]="cliente.clie_Activo ? 'bg-success' : 'bg-danger'">
+                                {{ cliente.clie_Activo ? 'Activo' : 'Inactivo' }}
+                            </span>
+                        </div>
+
+                        <div
+                            class="border-top border-dashed mt-3 pt-3 d-flex align-items-center justify-content-between gap-3">
+                            <small class="text-muted">
+                                <i class="bi bi-calendar align-baseline me-1"></i>
+                                {{ cliente.clie_FechaNacimiento | date:'dd/MM/yyyy' }}
+                            </small>
+                            <a [routerLink]="['/general/clientes/details', cliente.clie_Id]" class="link-effect">Ver
+                                más<i class="bi bi-chevron-right align-baseline ms-1"></i></a>
+                        </div>
                     </div>
                 </div>
-            </form>
+            </div>
+        </div><!--end row-->
+
+        <!-- No Results -->
+        <div *ngIf="filteredClientes().length === 0 && !isLoading && !showCreate && !showEdit" class="text-center py-4">
+            <div class="avatar-md mx-auto mb-4">
+                <div class="avatar-title bg-light text-primary rounded-circle fs-4xl">
+                    <i class="bi bi-search"></i>
+                </div>
+            </div>
+            <h5 class="mt-2">{{ searchTerm ? 'No hay clientes que coincidan con la búsqueda' : 'No hay clientes para
+                mostrar' }}</h5>
+        </div>
+
+        <!-- Pagination Info -->
+        <div class="row align-items-center mb-4 justify-content-between text-center text-sm-start"
+            *ngIf="!isLoading && Cliente.length > 0 && !showCreate && !showEdit">
+            <div class="col-sm">
+                <div class="text-muted">
+                    Mostrando <span class="fw-semibold">{{ filteredClientes().length }}</span> de <span
+                        class="fw-semibold">{{
+                        Cliente.length }}</span> clientes
+                </div>
+            </div>
         </div>
     </div>
-
-<div bsModal #deleteRecordModal="bs-modal" id="deleteRecordModal" class="modal fade zoomIn">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="btn-close" id="deleteRecord-close" (click)="deleteRecordModal.hide()"></button>
-            </div>
-            <div class="modal-body p-md-5">
-                <div class="text-center">
-                    <div class="text-danger">
-                        <i class="bi bi-trash display-5"></i>
-                    </div>
-                    <div class="mt-4">
-                        <h4 class="mb-2">Are you sure ?</h4>
-                        <p class="text-muted mx-3 mb-0">Are you sure you want to remove this record ?</p>
-                    </div>
-                </div>
-                <div class="d-flex gap-2 justify-content-center mt-4 pt-2 mb-2">
-                    <button type="button" class="btn w-sm btn-light btn-hover" (click)="deleteRecordModal.hide()">Close</button>
-                    <button type="button" class="btn w-sm btn-danger btn-hover" id="delete-record" (click)="confirmDelete(deleteID)">Yes, Delete
-                        It!</button>
-                </div>
-            </div>
 </div>
- -->
-
- <style>
-    .text-center{
-        text-align: center;
-    }
- </style>

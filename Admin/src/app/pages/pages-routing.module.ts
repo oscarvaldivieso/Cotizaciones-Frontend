@@ -39,9 +39,6 @@ const routes: Routes = [
     path: 'ui', loadChildren: () => import('./ui/ui.module').then(m => m.UiModule)
   },
   {
-    path: 'invoices', loadChildren: () => import('./invoices/invoices.module').then(m => m.InvoicesModule)
-  },
-  {
     path: 'advance-ui', loadChildren: () => import('./advanceui/advanceui.module').then(m => m.AdvanceuiModule)
   },
   {

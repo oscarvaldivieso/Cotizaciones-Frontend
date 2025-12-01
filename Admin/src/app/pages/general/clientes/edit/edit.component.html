@@ -1,97 +1,98 @@
-<form [formGroup]="editForm" (ngSubmit)="editarCliente()">
-    <div class="row">
-  
-      <!-- Identidad -->
-      <div class="col-lg-4">
-        <label class="form-label">Identidad <span class="text-danger">*</span></label>
-        <input type="text" formControlName="clie_Identidad" class="form-control">
-        <div class="invalid-feedback">Por favor ingrese su identidad.</div>
+<div class="card">
+  <div class="card-header">
+    <h5 class="card-title mb-0">
+      <i class="ri-edit-line me-2"></i>Editar Cliente
+    </h5>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="editForm" (ngSubmit)="editarCliente()">
+      <div class="row">
+
+        <!-- Tipo de Cliente -->
+        <div class="col-md-6 mb-3">
+          <label for="tiCl_Id" class="form-label">
+            Tipo de Cliente <span class="text-danger">*</span>
+          </label>
+          <ng-select [items]="tiposCliente" bindLabel="tiCl_Nombre" bindValue="tiCl_Id" formControlName="tiCl_Id"
+            placeholder="Seleccione un tipo de cliente" [clearable]="false" id="tiCl_Id">
+          </ng-select>
+          <div *ngIf="submit && form['tiCl_Id'].errors" class="text-danger mt-1">
+            <small *ngIf="form['tiCl_Id'].errors['required']">El tipo de cliente es requerido</small>
+          </div>
+        </div>
+
+        <!-- Nombre Completo -->
+        <div class="col-md-6 mb-3">
+          <label for="clie_Nombre" class="form-label">
+            Nombre Completo <span class="text-danger">*</span>
+          </label>
+          <input type="text" class="form-control" id="clie_Nombre" formControlName="clie_Nombre"
+            placeholder="Ingrese el nombre completo" [class.is-invalid]="submit && form['clie_Nombre'].errors">
+          <div *ngIf="submit && form['clie_Nombre'].errors" class="invalid-feedback">
+            <small *ngIf="form['clie_Nombre'].errors['required']">El nombre es requerido</small>
+          </div>
+        </div>
+
+        <!-- Identidad -->
+        <div class="col-md-6 mb-3">
+          <label for="clie_Identidad" class="form-label">
+            Identidad <span class="text-danger">*</span>
+          </label>
+          <input type="text" class="form-control" id="clie_Identidad" formControlName="clie_Identidad"
+            placeholder="Ingrese la identidad" [class.is-invalid]="submit && form['clie_Identidad'].errors">
+          <div *ngIf="submit && form['clie_Identidad'].errors" class="invalid-feedback">
+            <small *ngIf="form['clie_Identidad'].errors['required']">La identidad es requerida</small>
+          </div>
+        </div>
+
+        <!-- Fecha de Nacimiento -->
+        <div class="col-md-6 mb-3">
+          <label for="clie_FechaNacimiento" class="form-label">
+            Fecha de Nacimiento
+          </label>
+          <input type="date" class="form-control" id="clie_FechaNacimiento" formControlName="clie_FechaNacimiento">
+        </div>
+
+        <!-- Teléfono -->
+        <div class="col-md-6 mb-3">
+          <label for="clie_Telefono" class="form-label">
+            Teléfono <span class="text-danger">*</span>
+          </label>
+          <input type="tel" class="form-control" id="clie_Telefono" formControlName="clie_Telefono"
+            placeholder="Ingrese el teléfono" [class.is-invalid]="submit && form['clie_Telefono'].errors">
+          <div *ngIf="submit && form['clie_Telefono'].errors" class="invalid-feedback">
+            <small *ngIf="form['clie_Telefono'].errors['required']">El teléfono es requerido</small>
+          </div>
+        </div>
+
+        <!-- Correo Electrónico -->
+        <div class="col-md-6 mb-3">
+          <label for="clie_CorreoElectronico" class="form-label">
+            Correo Electrónico <span class="text-danger">*</span>
+          </label>
+          <input type="email" class="form-control" id="clie_CorreoElectronico" formControlName="clie_CorreoElectronico"
+            placeholder="ejemplo@correo.com" [class.is-invalid]="submit && form['clie_CorreoElectronico'].errors">
+          <div *ngIf="submit && form['clie_CorreoElectronico'].errors" class="invalid-feedback">
+            <small *ngIf="form['clie_CorreoElectronico'].errors['required']">El correo electrónico es requerido</small>
+            <small *ngIf="form['clie_CorreoElectronico'].errors['email']">Ingrese un correo válido</small>
+          </div>
+        </div>
+
       </div>
-  
-      <!-- Nombres -->
-      <div class="col-lg-4">
-        <label class="form-label">Nombres <span class="text-danger">*</span></label>
-        <input type="text" formControlName="clie_Nombres" class="form-control">
-        <div class="invalid-feedback">Por favor ingrese sus nombres.</div>
+
+      <!-- Botones -->
+      <div class="row mt-3">
+        <div class="col-12">
+          <div class="d-flex justify-content-end gap-2">
+            <button type="button" class="btn btn-light" (click)="cancelEdit()">
+              <i class="ri-close-line me-1"></i>Cancelar
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="ri-save-line me-1"></i>Actualizar Cliente
+            </button>
+          </div>
+        </div>
       </div>
-  
-      <!-- Apellidos -->
-      <div class="col-lg-4">
-        <label class="form-label">Apellidos <span class="text-danger">*</span></label>
-        <input type="text" formControlName="clie_Apellidos" class="form-control">
-        <div class="invalid-feedback">Por favor ingrese sus apellidos.</div>
-      </div>
-  
-      <!-- Fecha de nacimiento -->
-      <div class="col-lg-4">
-        <label class="form-label">Fecha de Nacimiento <span class="text-danger">*</span></label>
-        <input type="date" formControlName="clie_FechaNacimiento" class="form-control">
-        <div class="invalid-feedback">Por favor ingrese su fecha de nacimiento.</div>
-      </div>
-  
-      <!-- Sexo -->
-      <div class="col-lg-4">
-        <label class="form-label">Sexo <span class="text-danger">*</span></label>
-        <select formControlName="clie_Sexo" class="form-control">
-          <option value="">Seleccione un sexo</option>
-          <option value="M">Masculino</option>
-          <option value="F">Femenino</option>
-        </select>
-        <div class="invalid-feedback">Por favor seleccione el sexo.</div>
-      </div>
-  
-      <!-- Estado civil -->
-      <div class="col-lg-4">
-        <label class="form-label">Estado Civil <span class="text-danger">*</span></label>
-        <ng-select
-          [items]="estadosCiviles"
-          bindLabel="esCi_Descripcion"
-          bindValue="esCi_Id"
-          formControlName="esCi_Id"
-          placeholder="Seleccione un estado civil">
-        </ng-select>
-        <div class="invalid-feedback">Por favor seleccione el estado civil.</div>
-      </div>
-  
-      <!-- Dirección -->
-      <div class="col-lg-4">
-        <label class="form-label">Dirección <span class="text-danger">*</span></label>
-        <input type="text" formControlName="clie_Direccion" class="form-control">
-        <div class="invalid-feedback">Por favor ingrese la dirección.</div>
-      </div>
-  
-      <!-- Municipio -->
-      <div class="col-lg-4">
-        <label class="form-label">Municipio <span class="text-danger">*</span></label>
-        <ng-select
-          [items]="municipios"
-          bindLabel="muni_Nombre"
-          bindValue="muni_Codigo"
-          formControlName="muni_Codigo"
-          placeholder="Seleccione un municipio">
-        </ng-select>
-        <div class="invalid-feedback">Por favor seleccione un municipio.</div>
-      </div>
-  
-      <!-- Teléfono -->
-      <div class="col-lg-4">
-        <label class="form-label">Teléfono <span class="text-danger">*</span></label>
-        <input type="text" formControlName="clie_Telefono" class="form-control">
-        <div class="invalid-feedback">Por favor ingrese el número de teléfono.</div>
-      </div>
-  
-      <!-- Imagen -->
-      <!-- <div class="col-lg-4">
-        <label class="form-label">Imagen</label>
-        <-- Aquí puedes usar Dropzone o input file si lo prefieres -->
-        <!-- <input type="file" (change)="onFileSelected($event)" class="form-control">
-      </div> --> 
-  
-    </div>
-  
-    <div class="mt-4 d-flex justify-content-end gap-2">
-      <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancelar</button>
-      <button type="submit" class="btn btn-success">Guardar</button>
-    </div>
-  </form>
-  
+    </form>
+  </div>
+</div>

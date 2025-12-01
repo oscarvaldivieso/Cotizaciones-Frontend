@@ -1,0 +1,295 @@
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title mb-0">Agregar un vuelo</h4>
+            </div><!-- end card header -->
+            <div class="card-body form-steps">
+                <form (submit)="editarVuelo()" class="needs-validation" novalidate [formGroup]="validationform">
+                    <div class="text-center pt-3 pb-4 mb-1">
+                        <img src="assets/images/logo-dark.png" alt="" height="22" class="card-logo card-logo-dark mx-auto">
+                        <img src="assets/images/logo-light.png" alt="" height="22" class="card-logo card-logo-light mx-auto">
+                    </div>
+    
+                    <ng-stepper #cdkStepper [linear]="true" (selectionChange)="change($event)" class="step-arrow-nav wizard">
+                        <cdk-step [optional]="false" >
+                                <ng-template cdkStepLabel class="wizard-nav">
+                                    <button class="nav-link done" id="steparrow-gen-info-tab" data-bs-toggle="pill" type="button" aria-readonly="true" disabled="true">Vuelo</button>
+                                </ng-template>
+                                @if (cdkStepper.selectedIndex === 0) {
+                                <div>
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="steparrow-gen-info-email-input">Nombre del vuelo</label>
+                                                <input type="text" class="form-control" id="steparrow-gen-info-email-input" placeholder="Ingrese el nombre del vuelo" formControlName="vuel_Nombre" [ngClass]="{'is-invalid': submit && form['vuel_Nombre'].errors}">
+                                                <div class="invalid-feedback">
+                                                    Este campo es requerido
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="steparrow-gen-info-username-input">Precio del vuelo</label>
+                                                <input type="text" maxlength="1000" class="form-control" id="steparrow-gen-info-username-input" placeholder="Ingrese el precio del vuelo" formControlName="vuel_Precio" [ngClass]="{'is-invalid': submit && form['vuel_Precio'].errors}">
+                                                <div class="invalid-feedback">
+                                                    Este campo es requerido
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="steparrow-gen-info-username-input">Sale</label>
+                                                <input type="datetime-local" class="form-control" id="steparrow-gen-info-username-input" placeholder="Ingrese el telefono del restaurante" formControlName="vuel_FechaPartida" [ngClass]="{'is-invalid': submit && form['vuel_FechaPartida'].errors}">
+                                                <div class="invalid-feedback">
+                                                    Este campo es requerido
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="steparrow-gen-info-username-input">Llega</label>
+                                                <input type="date" class="form-control" id="steparrow-gen-info-username-input" placeholder="Ingrese el telefono del restaurante" formControlName="vuel_FechaLlegada" [ngClass]="{'is-invalid': submit && form['vuel_FechaLlegada'].errors}">
+                                                <div class="invalid-feedback">
+                                                    Este campo es requerido
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="steparrow-gen-info-email-input">Descripción del vuelo</label>
+                                                <input type="text" class="form-control" id="steparrow-gen-info-email-input" placeholder="Ingrese una descripcion para el vuelo" formControlName="vuel_Descripcion" [ngClass]="{'is-invalid': submit && form['vuel_Descripcion'].errors}">
+                                                <div class="invalid-feedback">
+                                                    Este campo es requerido
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="steparrow-gen-info-username-input">Aerolinea</label>
+                                                <!-- <input type="text" class="form-control" id="steparrow-gen-info-username-input" placeholder="Ingrese el municipio del restaurante"> -->
+                                                <ng-select  bindLabel="aerl_Nombre" [items]="aerolineas" 
+                                                bindLabel="aerl_Nombre" 
+                                                bindValue="aerl_Id"
+                                                placeholder="Seleccione una aerolinea"
+                                                formControlName="aerl_Id"
+                                                [ngClass]="{'is-invalid': submit && form['aerl_Id'].errors}">
+                                                </ng-select>
+                                                <div class="invalid-feedback">
+                                                    Este campo es requerido
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="steparrow-gen-info-username-input">Modelo del avión</label>
+                                                <!-- <input type="text" class="form-control" id="steparrow-gen-info-username-input" placeholder="Ingrese el municipio del restaurante"> -->
+                                                <ng-select  bindLabel="avio_Modelo" [items]="aviones" 
+                                                bindLabel="avio_Modelo" 
+                                                bindValue="avio_Id"
+                                                placeholder="Seleccione un modelo de avión"
+                                                formControlName="avio_Id"
+                                                [ngClass]="{'is-invalid': submit && form['avio_Id'].errors}">
+                                                </ng-select>
+                                                <div class="invalid-feedback">
+                                                    Este campo es requerido
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="steparrow-gen-info-username-input">Aeropuerto de salida</label>
+                                                <!-- <input type="text" class="form-control" id="steparrow-gen-info-username-input" placeholder="Ingrese el municipio del restaurante"> -->
+                                                <ng-select  bindLabel="aerp_Nombre" [items]="aeropuertos" 
+                                                bindLabel="aerp_Nombre" 
+                                                bindValue="aerp_Id"
+                                                placeholder="Seleccione el aeropuerto de salida "
+                                                formControlName="aerp_Salida_Id"
+                                                [ngClass]="{'is-invalid': submit && form['aerp_Salida_Id'].errors}">
+                                                </ng-select>
+                                                <div class="invalid-feedback">
+                                                    Este campo es requerido
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="steparrow-gen-info-username-input">Aeropuerto destino</label>
+                                                <!-- <input type="text" class="form-control" id="steparrow-gen-info-username-input" placeholder="Ingrese el municipio del restaurante"> -->
+                                                <ng-select  bindLabel="aerp_Nombre" [items]="aeropuertos" 
+                                                bindLabel="aerp_Nombre" 
+                                                bindValue="aerp_Id"
+                                                placeholder="Seleccione el aeropuerto destino"
+                                                formControlName="aerp_Llegada_Id"
+                                                [ngClass]="{'is-invalid': submit && form['aerp_Llegada_Id'].errors}">
+                                                </ng-select>
+                                                <div class="invalid-feedback">
+                                                    Este campo es requerido
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-lg-12">
+                                            <div class="mb-3">
+                                                <label class="form-label">Imagen de portada<span class="text-danger">*</span></label>
+                                                <dropzone class="dropzone" formControlName="vuel_Imagen" [config]="dropzoneConfig" [message]="'Drop files here or click to upload.'" (success)="onUploadSuccess($event)"></dropzone>
+                                                @if (uploadedFiles) {
+                                                <ul class="list-unstyled mb-0" id="dropzone-preview">
+                                                    @for (file of uploadedFiles; track $index) {
+                                                    <li class="mt-2" id="dropzone-preview-list">
+                                                        <div class="border rounded">
+                                                            <div class="d-flex flex-wrap gap-2 p-2">
+                                                                <div class="flex-shrink-0 me-3">
+                                                                    <div class="avatar-sm bg-light rounded p-2">
+                                                                        @if (file.dataURL) {
+                                                                        <img class="img-fluid rounded d-block" [src]="file.dataURL" alt="Dropzone-Image" />
+                                                                        }@else {
+                                                                        <img class="img-fluid rounded d-block" [src]="file" alt="Dropzone-Image" />
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                                <div class="flex-grow-1">
+                                                                    <div class="pt-1">
+                                                                        @if (file.name) {<h5 class="fs-md mb-1">{{ file.name }}</h5>}
+                                                                        @if (file.size) {<p class="fs-sm text-muted mb-0">{{ file.size }}</p>}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="flex-shrink-0 ms-3">
+                                                                    <button type="button" (click)="removeFile(file)" class="btn btn-sm btn-danger">Eliminar</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                }
+                                                </ul>
+                                                <div class="invalid-feedback">
+                                                    Este campo es requerido
+                                                </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                                <!-- wizard-tab -->
+                                <div class="d-flex align-items-start gap-3 mt-4">
+                                    <a  [routerLink]="['/vuelo/vuelos/list']" class="btn btn-primary mb-3 custom-toggle right  ">
+                                        <i class="bi bi-arrow-left-circle me-1"></i> Regresar
+                                    </a>
+                                    <button type="button" (click)="cdkStepper.next()" class="btn btn-secondary btn-label right ms-auto nexttab
+                    nexttab" data-nexttab="steparrow-description-info-tab" ><i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Siguiente</button>
+                                </div>
+                        </cdk-step>
+                        <cdk-step [optional]="false">
+                            <ng-template cdkStepLabel>
+                                <button class="nav-link" id="steparrow-description-info-tab" type="button" aria-readonly="true" disabled>Servicios</button>
+                            </ng-template>
+                            @if (cdkStepper.selectedIndex === 1) {
+                            <div class="p-3">
+                                <div class="row">
+                                    <div class="col-lg-6" *ngFor="let servicio of serviciosDisponibles">
+                                      <div class="form-check form-switch form-switch-md mb-3" dir="ltr">
+                                        <input
+                                          type="checkbox"
+                                          class="form-check-input"
+                                          [id]="'servicio-' + servicio.serv_Id"
+                                          [value]="servicio.serv_Id"
+                                          [checked]="serviciosSeleccionados.includes(servicio.serv_Id)"
+                                          (change)="onServicioToggle(servicio.serv_Id, $event)"
+                                        />
+                                        <label class="form-check-label" [for]="'servicio-' + servicio.serv_Id">
+                                          {{ servicio.serv_Descripcion }}
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </div>
+                            </div>
+                            }
+                            <div class="d-flex align-items-start gap-3 mt-4">
+                                <button type="button" class="btn btn-light btn-label previestab" data-previous="steparrow-gen-info-tab" cdkStepperPrevious><i class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i> Regresar</button>
+                                <button type="button" class="btn btn-secondary btn-label right ms-auto nexttab
+    nexttab" data-nexttab="pills-experience-tab" cdkStepperNext><i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Siguiente</button>
+                            </div>
+                        </cdk-step>
+
+                        <cdk-step [optional]="false">
+                            <ng-template cdkStepLabel>
+                                <button class="nav-link" id="steparrow-descripcion-info-tab" type="button" aria-readonly="true" disabled>Imagenes</button>
+                            </ng-template>
+                            @if (cdkStepper.selectedIndex === 2) {
+                            <div>
+                                <div class="mb-3">
+                                    <label class="form-label">Imagen del empleado<span class="text-danger">*</span></label>
+                                    <dropzone class="dropzone" [config]="dropzoneGaleriaConfig" (success)="onUploadGaleriaSuccess($event)" formControlName="imagenes" [message]="'Drop files here or click to upload.'" (success)="onUploadGaleriaSuccess($event)"></dropzone>
+                                    @if (uploadedFilesGaleria) {
+                                    <ul class="list-unstyled mb-0" id="dropzone-preview">
+                                        @for (file of uploadedFilesGaleria; track $index) {
+                                        <li class="mt-2" id="dropzone-preview-list">
+                                            <div class="border rounded">
+                                                <div class="d-flex flex-wrap gap-2 p-2">
+                                                    <div class="flex-shrink-0 me-3">
+                                                        <div class="avatar-sm bg-light rounded p-2">
+                                                            @if (file.dataURL) {
+                                                            <img class="img-fluid rounded d-block" [src]="file.dataURL" alt="Dropzone-Image" />
+                                                            }@else {
+                                                            <img class="img-fluid rounded d-block" [src]="file" alt="Dropzone-Image" />
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <div class="pt-1">
+                                                            @if (file.name) {<h5 class="fs-md mb-1">{{ file.name }}</h5>}
+                                                            @if (file.size) {<p class="fs-sm text-muted mb-0">{{ file.size }}</p>}
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-shrink-0 ms-3">
+                                                        <button type="button" (click)="removeFileGaleria(file)" class="btn btn-sm btn-danger">Eliminar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    }
+                                    </ul>
+                                    }
+                                </div>
+                            </div>
+                        }
+                            <div class="d-flex align-items-start gap-3 mt-4">
+                                <button type="button" class="btn btn-light btn-label previestab" data-previous="steparrow-gen-info-tab" cdkStepperPrevious><i class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i> Regresar</button>
+                                <button type="submit" class="btn btn-secondary btn-label right ms-auto nexttab
+    nexttab" data-nexttab="pills-experience-tab"><i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Insertar</button>
+                            </div>
+                        </cdk-step>
+
+    
+                        <cdk-step [optional]="false">
+                            <ng-template cdkStepLabel>
+                                <button class="nav-link"  type="button" aria-readonly="true" disabled>Hecho</button>
+                            </ng-template>
+                            @if (cdkStepper.selectedIndex === 3) {
+                            <div>
+                                <div class="text-center">
+                                    <div class="avatar-md mt-5 mb-4 mx-auto">
+                                        <div class="avatar-title bg-light text-success display-4 rounded-circle">
+                                            <i class="ri-checkbox-circle-fill"></i>
+                                        </div>
+                                    </div>
+                                    <h5>Insertado</h5>
+                                    <p class="text-muted">Su restaurante ha sido exitosamente insertado</p>
+                                </div>
+                            </div>
+                        }
+                        </cdk-step>
+                    </ng-stepper>
+                    <!-- </div> -->
+                </form>
+            </div>
+            <!-- end card body -->
+        </div>
+        <!-- end card -->
+    </div>
+</div>

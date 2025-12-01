@@ -1,0 +1,37 @@
+<form [formGroup]="editForm" (ngSubmit)="editarTour()">
+    <div class="row">
+      <!-- Campos similares a create.component.html -->
+      <div class="col-lg-6">
+        <label class="form-label">Actividad</label>
+        <!-- <input type="text" formControlName="acti_Id" class="form-control"> -->
+        <ng-select 
+            [items]="actividades"
+            bindLabel="acti_Descripcion"
+            bindValue="acti_Id"
+            formControlName="acti_Id"
+            placeholder="Seleccione una actividad">
+        </ng-select>
+      </div>
+      <div class="col-lg-6">
+        <label class="form-label">Dirección</label>
+        <input type="text" formControlName="tour_Direccion" class="form-control">
+      </div>
+      <div class="col-lg-6">
+        <label class="form-label">Municipio</label>
+        <!-- <input type="text" formControlName="muni_Codigo" class="form-control"> -->
+        <ng-select 
+            [items]="municipios"
+            bindLabel="muni_Nombre"
+            bindValue="muni_Codigo"
+            formControlName="muni_Codigo"
+            placeholder="Seleccione un municipio">
+        </ng-select>
+      </div>
+      <!-- Empleado y rol, si quieres incluir ng-select como en create -->
+    </div>
+    <div class="mt-3 d-flex justify-content-end gap-2">
+      <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancelar</button>
+      <button type="submit" class="btn btn-success">Guardar</button>
+    </div>
+  </form>
+  

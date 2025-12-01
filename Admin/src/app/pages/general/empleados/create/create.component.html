@@ -1,0 +1,187 @@
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Ingresar datos de empleado</h5>
+            </div>
+            <div class="card-body">
+                <form (submit)="crearEmpleado()" class="needs-validation" novalidate [formGroup]="validationform">
+                    
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="identidad-input"  class="form-label">Identidad<span class="text-danger">*</span></label>
+                                <input type="text" formControlName="empl_Identidad" id="identidad-input" [ngClass]="{'is-invalid': submit && form['empl_Identidad'].errors}"  class="form-control" placeholder="Identidad" mask="0000-0000-00000" maxlength="15">
+                                <div class="invalid-feedback">
+                                    Por favor ingrese un número de identidad.
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="identidad-input"  class="form-label">Nombres<span class="text-danger">*</span></label>
+                                <input type="text"  id="identidad-input" formControlName="empl_Nombres"  class="form-control" [ngClass]="{'is-invalid': submit && form['empl_Nombres'].errors}" placeholder="Nombres" required>
+                                <div class="invalid-feedback">
+                                    Por favor ingrese los nombres.
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="identidad-input"  class="form-label">Apellidos<span class="text-danger">*</span></label>
+                                <input type="text"  id="identidad-input" formControlName="empl_Apellidos" [ngClass]="{'is-invalid': submit && form['empl_Apellidos'].errors}" class="form-control" placeholder="Apellidos" required>
+                                <div class="invalid-feedback">
+                                    Por favor ingrese los apellidos.
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                        
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="bathroom-input" class="form-label">Fecha de nacimiento<span class="text-danger">*</span></label>
+                                <input type="date"  formControlName="empl_FechaNacimiento" [ngClass]="{'is-invalid': submit && form['empl_FechaNacimiento'].errors}" class="form-control" id="bathroom-input" placeholder="Fecha de Nacimiento" required>
+                                <div class="invalid-feedback">
+                                    Por favor ingrese la fecha de nacimiento.
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="bedroom-input" class="form-label">Cargo<span class="text-danger">*</span></label>
+                                <!-- <input type="number" formControlName="carg_Id"  [ngClass]="{'is-invalid': submit && form['carg_Id'].errors}" id="bedroom-input" class="form-control" placeholder="Enter Bedroom" required> -->
+                                <ng-select  bindLabel="carg_Descripcion" [ngClass]="{'is-invalid': submit && form['carg_Id'].errors}" formControlName="carg_Id" [items]="cargos" 
+                                bindLabel="carg_Descripcion" 
+                                bindValue="carg_Id"
+                                placeholder="Seleccione un cargo"
+                                formControlName="carg_Id">
+                                </ng-select>
+                                <div class="invalid-feedback">
+                                    Por favor ingrese el cargo del empleado.
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                        
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label class="form-label d-block">Sexo <span class="text-danger">*</span></label>
+                              
+                                <div class="btn-group" role="group" aria-label="Sexo">
+                                  <input type="radio" class="btn-check" id="sexo-m" value="M" formControlName="empl_Sexo">
+                                  <label class="btn btn-outline-light sexo-icon" for="sexo-m" title="Masculino">
+                                    <i class="fas fa-mars"></i>
+                                  </label>
+                              
+                                  <input type="radio" class="btn-check" id="sexo-f" value="F" formControlName="empl_Sexo">
+                                  <label class="btn btn-outline-light sexo-icon" for="sexo-f" title="Femenino">
+                                    <i class="fas fa-venus"></i>
+                                  </label>
+                                </div>
+                              
+                                <div class="invalid-feedback d-block" *ngIf="submit && form['empl_Sexo'].errors">
+                                  Por favor seleccione el sexo.
+                                </div>
+                              </div>
+                              
+                            <!-- <div class="mb-3">
+                                <label for="bathroom-input" class="form-label">Sexo<span class="text-danger">*</span></label>
+                                <input type="text" formControlName="empl_Sexo" [ngClass]="{'is-invalid': submit && form['empl_Sexo'].errors}" class="form-control" id="bathroom-input" placeholder="Enter Bathroom" required>
+                                <div class="invalid-feedback">
+                                    Por favor ingrese el sexo.
+                                </div>
+                            </div> -->
+                        </div><!--end col-->
+                        <div class="col-lg-12">
+                            <div class="mb-3">
+                                <label for="street-address" class="form-label">Dirección<span class="text-danger">*</span></label>
+                                <input type="text" formControlName="empl_Direccion"  [ngClass]="{'is-invalid': submit && form['empl_Direccion'].errors}" class="form-control" id="street-address" placeholder="Dirección" required>
+                                <div class="invalid-feedback">
+                                    Por favor ingrese una dirección.
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="state-input" class="form-label">Estado civil<span class="text-danger">*</span></label>
+                                <!-- <input type="number" formControlName="esCi_Id" [ngClass]="{'is-invalid': submit && form['esCi_Id'].errors}" class="form-control" id="state-input"  placeholder="Enter state" required> -->
+                                <ng-select  bindLabel="esCi_Nombre" [items]="estadosCiviles" 
+                                bindLabel="esCi_Nombre" 
+                                bindValue="esCi_Id"
+                                placeholder="Seleccione un estado civil"
+                                formControlName="esCi_Id">
+                                </ng-select>
+                                <div class="invalid-feedback">
+                                    Por favor ingrese un estado civil.
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="country-input" class="form-label">Teléfono <span class="text-danger">*</span></label>
+                                <input type="text" mask="0000-0000" maxlength="15" formControlName="empl_Telefono" [ngClass]="{'is-invalid': submit && form['empl_Telefono'].errors}" class="form-control" id="country-input" placeholder="Teléfono" required>
+                            </div>
+                        </div><!--end col-->
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="zipcode-input" class="form-label">Municipio<span class="text-danger">*</span></label>
+                                <!-- <input type="text" formControlName="muni_Codigo" [ngClass]="{'is-invalid': submit && form['muni_Codigo'].errors}"  class="form-control" id="zipcode-input" placeholder="254 325" required> -->
+                                <ng-select  bindLabel="muni_Nombre" [items]="municipios" 
+                                bindLabel="muni_Nombre" 
+                                bindValue="muni_Codigo"
+                                placeholder="Seleccione un municipio"
+                                formControlName="muni_Codigo"
+                                [ngClass]="{'is-invalid': submit && form['muni_Codigo'].errors}">
+                                </ng-select>
+                                <div class="invalid-feedback">
+                                    Por favor ingrese un estado civil.
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                        <div class="mb-3">
+                            <label class="form-label">Imagen del empleado<span class="text-danger">*</span></label>
+                            <dropzone  class="dropzone" [config]="dropzoneConfig" [message]="'Drop files here or click to upload.'" (success)="onUploadSuccess($event)"></dropzone>
+                            @if (uploadedFiles) {
+                            <ul class="list-unstyled mb-0" id="dropzone-preview">
+                                @for (file of uploadedFiles; track $index) {
+                                <li class="mt-2" id="dropzone-preview-list">
+                                    <div class="border rounded">
+                                        <div class="d-flex flex-wrap gap-2 p-2">
+                                            <div class="flex-shrink-0 me-3">
+                                                <div class="avatar-sm bg-light rounded p-2">
+                                                    @if (file.dataURL) {
+                                                    <img class="img-fluid rounded d-block" [src]="file.dataURL" alt="Dropzone-Image" />
+                                                    }@else {
+                                                    <img class="img-fluid rounded d-block" [src]="file" alt="Dropzone-Image" />
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <div class="pt-1">
+                                                    @if (file.name) {<h5 class="fs-md mb-1">{{ file.name }}</h5>}
+                                                    @if (file.size) {<p class="fs-sm text-muted mb-0">{{ file.size }}</p>}
+                                                </div>
+                                            </div>
+                                            <div class="flex-shrink-0 ms-3">
+                                                <button (click)="removeFile(file)" class="btn btn-sm btn-danger">Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                            </ul>
+                            }
+                        </div>
+                        
+                        <div class="col-lg-12">
+                            <div class="hstack gap-2 justify-content-end">
+                                <button type="button" (click)="cancelarFormulario()" class="btn btn-secondary"><i class="bi bi-repeat align-baseline me-1"></i> Cancelar</button>
+                                <button type="submit" class="btn btn-primary"><i class="bi bi-clipboard2-check align-baseline me-1"></i> Guardar</button>
+                            </div>
+                        </div>
+                    </div><!--end row-->
+                </form>
+            </div>
+        </div><!--end card-->
+    </div><!--end col-->
+</div><!--end row-->
+

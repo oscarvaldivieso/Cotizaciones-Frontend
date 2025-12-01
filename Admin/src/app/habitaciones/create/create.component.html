@@ -1,0 +1,12 @@
+<h2> Crear Habitación</h2>
+
+<form (submit) = "crearHabitacion()">
+    <label>Tipo de Habitación: </label>
+    <input type="number" [(ngModel)] = "habitacion.tipH_Id" name="tipH_Id"/>
+    <label>Hotel: </label>
+    <input type="number" [(ngModel)] = "habitacion.hote_Id" name="hote_Id"/>
+    <label>Precio Noche: </label>
+    <input type="number" [(ngModel)] = "habitacion.habt_PrecioNoche" name="habt_PrecioNoche"/>
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</form>

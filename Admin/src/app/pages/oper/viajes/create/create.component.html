@@ -1,0 +1,198 @@
+<!-- Custom Breadcrumb Header -->
+<app-breadcrumbs [title]="'Registrar Viaje'" [icon]="'ri-car-line'" [breadcrumbItems]="[
+    { label: 'Operaciones' },
+    { label: 'Viajes', link: '/oper/viajes/list' },
+    { label: 'Registrar', active: true }
+  ]">
+</app-breadcrumbs>
+
+<div class="row">
+    <div class="col-lg-12">
+        <!-- Form Card -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="ri-car-line align-baseline me-1"></i>
+                    Información del Viaje
+                </h5>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="viajeForm" (ngSubmit)="onSubmit()">
+                    <div class="row">
+                        <!-- Fecha -->
+                        <div class="col-md-4 mb-3">
+                            <label for="viaj_Fecha" class="form-label">
+                                Fecha del Viaje <span class="text-danger">*</span>
+                            </label>
+                            <input type="date" class="form-control" id="viaj_Fecha" formControlName="viaj_Fecha"
+                                [class.is-invalid]="viajeForm.get('viaj_Fecha')?.invalid && viajeForm.get('viaj_Fecha')?.touched">
+                            <div class="invalid-feedback">
+                                La fecha es requerida
+                            </div>
+                        </div>
+
+                        <!-- Sucursal -->
+                        <div class="col-md-4 mb-3">
+                            <label for="sucu_Id" class="form-label">
+                                Sucursal <span class="text-danger">*</span>
+                            </label>
+                            <select class="form-select" id="sucu_Id" formControlName="sucu_Id"
+                                (change)="onSucursalChange($event)"
+                                [class.is-invalid]="viajeForm.get('sucu_Id')?.invalid && viajeForm.get('sucu_Id')?.touched">
+                                <option value="">Seleccione una sucursal</option>
+                                <option *ngFor="let sucursal of sucursales" [value]="sucursal.sucu_Id">
+                                    {{ sucursal.sucu_Nombre }}
+                                </option>
+                            </select>
+                            <div class="invalid-feedback">
+                                La sucursal es requerida
+                            </div>
+                        </div>
+
+                        <!-- Transportista -->
+                        <div class="col-md-4 mb-3">
+                            <label for="tran_Id" class="form-label">
+                                Transportista <span class="text-danger">*</span>
+                            </label>
+                            <select class="form-select" id="tran_Id" formControlName="tran_Id"
+                                [class.is-invalid]="viajeForm.get('tran_Id')?.invalid && viajeForm.get('tran_Id')?.touched">
+                                <option value="">Seleccione un transportista</option>
+                                <option *ngFor="let transportista of transportistas" [value]="transportista.tran_Id">
+                                    {{ transportista.tran_NombreCompleto }}
+                                </option>
+                            </select>
+                            <div class="invalid-feedback">
+                                El transportista es requerido
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Colaboradores Section -->
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="card border">
+                                <div class="card-header bg-light">
+                                    <h6 class="card-title mb-0">
+                                        <i class="ri-team-line align-baseline me-1"></i>
+                                        Colaboradores
+                                        <span class="badge bg-primary ms-2">{{ getSelectedColaboradores().length }}
+                                            seleccionados</span>
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Loading State -->
+                                    <div *ngIf="isLoading" class="text-center py-3">
+                                        <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                            <span class="visually-hidden">Cargando...</span>
+                                        </div>
+                                        <p class="text-muted mt-2 mb-0">Cargando colaboradores...</p>
+                                    </div>
+
+                                    <!-- Empty State -->
+                                    <div *ngIf="!isLoading && colaboradores.length === 0" class="text-center py-3">
+                                        <i class="ri-user-search-line text-muted fs-1"></i>
+                                        <p class="text-muted mt-2 mb-0">Seleccione una sucursal para ver sus
+                                            colaboradores</p>
+                                    </div>
+
+                                    <!-- Colaboradores List -->
+                                    <div *ngIf="!isLoading && colaboradores.length > 0" class="table-responsive">
+                                        <table class="table table-hover align-middle mb-0">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th style="width: 50px;"></th>
+                                                    <th>Código</th>
+                                                    <th>Nombre Completo</th>
+                                                    <th>Identidad</th>
+                                                    <th class="text-end">Distancia (km)</th>
+                                                    <th class="text-end">Tarifa (L)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let colaborador of colaboradores"
+                                                    [class.table-active]="colaborador.selected" style="cursor: pointer;"
+                                                    (click)="toggleColaborador(colaborador)">
+                                                    <td class="text-center">
+                                                        <input type="checkbox" class="form-check-input"
+                                                            [checked]="colaborador.selected"
+                                                            (click)="$event.stopPropagation()">
+                                                    </td>
+                                                    <td>{{ colaborador.colb_Codigo }}</td>
+                                                    <td>{{ colaborador.colb_NombreCompleto }}</td>
+                                                    <td>{{ colaborador.colb_Identidad }}</td>
+                                                    <td class="text-end">
+                                                        <span class="badge bg-info-subtle text-info">
+                                                            {{ colaborador.cosu_DistanciaKm || 0 }} km
+                                                        </span>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <span class="badge bg-success-subtle text-success">
+                                                            L {{ (colaborador.cosu_DistanciaKm || 0) *
+                                                            getTarifaTransportista() | number:
+                                                            '1.2-2' }}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <!-- Summary -->
+                                    <div *ngIf="getSelectedColaboradores().length > 0" class="border-top mt-3 pt-3">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="d-flex justify-content-between">
+                                                    <span class="fw-medium">Total Colaboradores:</span>
+                                                    <span class="badge bg-primary">{{
+                                                        getSelectedColaboradores().length
+                                                        }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="d-flex justify-content-between">
+                                                    <span class="fw-medium">Distancia Total:</span>
+                                                    <span class="badge" [class.bg-danger]="getDistanciaTotal() > 100"
+                                                        [class.bg-success]="getDistanciaTotal() <= 100">
+                                                        {{ getDistanciaTotal() }} km
+                                                        <span *ngIf="getDistanciaTotal() > 100">
+                                                            (Excede límite de 100 km)
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="d-flex gap-2 justify-content-end">
+                                <button type="button" class="btn btn-light" (click)="onCancel()"
+                                    [disabled]="isSubmitting">
+                                    <i class="ri-close-line align-baseline me-1"></i>
+                                    Cancelar
+                                </button>
+                                <button type="submit" class="btn btn-primary"
+                                    [disabled]="isSubmitting || viajeForm.invalid">
+                                    <span *ngIf="!isSubmitting">
+                                        <i class="ri-save-line align-baseline me-1"></i>
+                                        Guardar Viaje
+                                    </span>
+                                    <span *ngIf="isSubmitting">
+                                        <span class="spinner-border spinner-border-sm me-1" role="status"
+                                            aria-hidden="true"></span>
+                                        Guardando...
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

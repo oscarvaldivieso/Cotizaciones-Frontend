@@ -1,0 +1,267 @@
+<!-- Custom Breadcrumb Header -->
+<app-breadcrumbs [title]="'Nuevo Colaborador'" [icon]="'ri-user-add-line'" [breadcrumbItems]="[
+    { label: 'General' },
+    { label: 'Colaboradores', link: '/general/colaboradores/list' },
+    { label: 'Nuevo', active: true }
+  ]">
+</app-breadcrumbs>
+
+<div class="row">
+    <div class="col-lg-12">
+        <!-- Form Card -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="ri-user-add-line align-baseline me-1"></i>
+                    Información del Colaborador
+                </h5>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="colaboradorForm" (ngSubmit)="onSubmit()">
+                    <div class="row">
+                        <!-- Código -->
+                        <div class="col-md-4 mb-3">
+                            <label for="colb_Codigo" class="form-label">
+                                Código <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="ri-barcode-line"></i></span>
+                                <input type="text" class="form-control" id="colb_Codigo" formControlName="colb_Codigo"
+                                    placeholder="COL00001" [class.is-invalid]="hasFieldError('colb_Codigo')">
+                            </div>
+                            <div class="invalid-feedback d-block" *ngIf="hasFieldError('colb_Codigo')">
+                                {{ getFieldError('colb_Codigo') }}
+                            </div>
+                        </div>
+
+                        <!-- Identidad -->
+                        <div class="col-md-4 mb-3">
+                            <label for="colb_Identidad" class="form-label">
+                                Identidad <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="ri-id-card-line"></i></span>
+                                <input type="text" class="form-control" id="colb_Identidad"
+                                    formControlName="colb_Identidad" placeholder="0801199012345" maxlength="13"
+                                    [class.is-invalid]="hasFieldError('colb_Identidad')">
+                            </div>
+                            <div class="invalid-feedback d-block" *ngIf="hasFieldError('colb_Identidad')">
+                                {{ getFieldError('colb_Identidad') }}
+                            </div>
+                            <small class="text-muted">Debe tener exactamente 13 dígitos</small>
+                        </div>
+
+                        <!-- Sexo -->
+                        <div class="col-md-4 mb-3">
+                            <label for="colb_Sexo" class="form-label">
+                                Sexo <span class="text-danger">*</span>
+                            </label>
+                            <div class="d-flex gap-3 mt-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="colb_Sexo" id="sexo_m" value="M"
+                                        formControlName="colb_Sexo">
+                                    <label class="form-check-label" for="sexo_m">
+                                        <i class="ri-men-line me-1"></i>Masculino
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="colb_Sexo" id="sexo_f" value="F"
+                                        formControlName="colb_Sexo">
+                                    <label class="form-check-label" for="sexo_f">
+                                        <i class="ri-women-line me-1"></i>Femenino
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Nombre Completo -->
+                        <div class="col-md-8 mb-3">
+                            <label for="colb_NombreCompleto" class="form-label">
+                                Nombre Completo <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="ri-user-line"></i></span>
+                                <input type="text" class="form-control" id="colb_NombreCompleto"
+                                    formControlName="colb_NombreCompleto" placeholder="Nombre completo del colaborador"
+                                    [class.is-invalid]="hasFieldError('colb_NombreCompleto')">
+                            </div>
+                            <div class="invalid-feedback d-block" *ngIf="hasFieldError('colb_NombreCompleto')">
+                                {{ getFieldError('colb_NombreCompleto') }}
+                            </div>
+                        </div>
+
+                        <!-- Teléfono -->
+                        <div class="col-md-4 mb-3">
+                            <label for="colb_Telefono" class="form-label">
+                                Teléfono
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="ri-phone-line"></i></span>
+                                <input type="text" class="form-control" id="colb_Telefono"
+                                    formControlName="colb_Telefono" placeholder="12345678" maxlength="8"
+                                    [class.is-invalid]="hasFieldError('colb_Telefono')">
+                            </div>
+                            <div class="invalid-feedback d-block" *ngIf="hasFieldError('colb_Telefono')">
+                                {{ getFieldError('colb_Telefono') }}
+                            </div>
+                            <small class="text-muted">Opcional - 8 dígitos</small>
+                        </div>
+                    </div>
+
+                    <!-- Sucursales Section -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="card border">
+                                <div class="card-header bg-light">
+                                    <h6 class="card-title mb-0">
+                                        <i class="ri-building-line align-baseline me-1"></i>
+                                        Asignación de Sucursales
+                                        <span class="badge bg-primary ms-2">{{ sucursalesAsignadas.length }}
+                                            asignada(s)</span>
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Add Sucursal Form -->
+                                    <div class="row g-3 align-items-end mb-3 p-3 bg-light rounded">
+                                        <div class="col-md-6">
+                                            <label for="sucursal_select" class="form-label fw-semibold">
+                                                <i class="ri-building-2-line me-1"></i>Seleccionar Sucursal
+                                            </label>
+                                            <select class="form-select" id="sucursal_select"
+                                                [(ngModel)]="selectedSucursalId" [ngModelOptions]="{standalone: true}">
+                                                <option [value]="null">Seleccione una sucursal...</option>
+                                                <option *ngFor="let sucursal of getSucursalesDisponibles()"
+                                                    [value]="sucursal.sucu_Id">
+                                                    {{ sucursal.sucu_Codigo }} - {{ sucursal.sucu_Nombre }}
+                                                </option>
+                                            </select>
+                                            <small class="text-muted" *ngIf="getSucursalesDisponibles().length === 0">
+                                                <i class="ri-information-line"></i> Todas las sucursales están asignadas
+                                            </small>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label for="distancia_input" class="form-label fw-semibold">
+                                                <i class="ri-map-pin-distance-line me-1"></i>Distancia (km)
+                                            </label>
+                                            <input type="number" class="form-control" id="distancia_input"
+                                                [(ngModel)]="distanciaInput" [ngModelOptions]="{standalone: true}"
+                                                min="1" max="50" step="0.1" placeholder="0.0"
+                                                [class.is-invalid]="distanciaInput > 0 && getDistanciaValidationMessage()">
+                                            <div class="invalid-feedback" *ngIf="getDistanciaValidationMessage()">
+                                                {{ getDistanciaValidationMessage() }}
+                                            </div>
+                                            <small class="text-muted">Rango: 0.1 - 50 km</small>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <button type="button" class="btn btn-success w-100"
+                                                (click)="agregarSucursal()" [disabled]="!canAddSucursal()">
+                                                <i class="ri-add-line align-baseline me-1"></i>Agregar
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Alert if no sucursales -->
+                                    <div *ngIf="sucursalesAsignadas.length === 0" class="alert alert-warning"
+                                        role="alert">
+                                        <i class="ri-information-line me-2"></i>
+                                        <strong>Importante:</strong> Debe asignar al menos una sucursal al colaborador.
+                                    </div>
+
+                                    <!-- Sucursales List -->
+                                    <div *ngIf="sucursalesAsignadas.length > 0" class="table-responsive">
+                                        <table class="table table-hover align-middle mb-0">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th style="width: 15%;">Código</th>
+                                                    <th style="width: 45%;">Sucursal</th>
+                                                    <th style="width: 20%;" class="text-end">Distancia</th>
+                                                    <th style="width: 20%;" class="text-center">Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let sa of sucursalesAsignadas; let i = index"
+                                                    class="align-middle">
+                                                    <td>
+                                                        <span class="badge bg-primary-subtle text-primary">
+                                                            {{ sa.sucursal.sucu_Codigo }}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <i class="ri-building-2-fill text-primary me-2"></i>
+                                                            <div>
+                                                                <div class="fw-medium">{{ sa.sucursal.sucu_Nombre }}
+                                                                </div>
+                                                                <small class="text-muted">{{ sa.sucursal.sucu_Direccion
+                                                                    }}</small>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <span class="badge bg-info-subtle text-info fs-sm">
+                                                            <i class="ri-map-pin-line me-1"></i>{{ sa.distancia }} km
+                                                        </span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button type="button" class="btn btn-sm btn-danger"
+                                                            (click)="eliminarSucursal(i)" title="Eliminar">
+                                                            <i class="ri-delete-bin-line"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <!-- Validation Rules Info -->
+                                    <div class="alert alert-info mt-3 mb-0" role="alert">
+                                        <h6 class="alert-heading mb-2">
+                                            <i class="ri-information-line me-1"></i>Reglas de Asignación
+                                        </h6>
+                                        <ul class="mb-0 ps-3">
+                                            <li>Un colaborador puede tener <strong>múltiples sucursales</strong>
+                                                asignadas</li>
+                                            <li>No se puede asignar la <strong>misma sucursal dos veces</strong></li>
+                                            <li>La distancia debe ser <strong>mayor que 0 y menor o igual a 50
+                                                    km</strong></li>
+                                            <li>Al menos <strong>una sucursal</strong> debe estar asignada</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="d-flex gap-2 justify-content-end">
+                                <button type="button" class="btn btn-light" (click)="onCancel()"
+                                    [disabled]="isSubmitting">
+                                    <i class="ri-close-line align-baseline me-1"></i>
+                                    Cancelar
+                                </button>
+                                <button type="submit" class="btn btn-primary"
+                                    [disabled]="isSubmitting || colaboradorForm.invalid || sucursalesAsignadas.length === 0">
+                                    <span *ngIf="!isSubmitting">
+                                        <i class="ri-save-line align-baseline me-1"></i>
+                                        Guardar Colaborador
+                                    </span>
+                                    <span *ngIf="isSubmitting">
+                                        <span class="spinner-border spinner-border-sm me-1" role="status"
+                                            aria-hidden="true"></span>
+                                        Guardando...
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

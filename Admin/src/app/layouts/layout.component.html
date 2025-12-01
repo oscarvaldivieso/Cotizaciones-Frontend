@@ -1,0 +1,26 @@
+<!-- Vertical layout -->
+@if (isVerticalLayoutRequested()) {
+    <app-vertical></app-vertical>
+} @else if (isHorizontalLayoutRequested()) {
+    <app-horizontal></app-horizontal>
+} @else if (isTwoColumnLayoutRequested()) {
+    <app-two-column></app-two-column>
+} @else {
+    <!-- Default: Vertical layout -->
+    <app-vertical></app-vertical>
+}
+
+<!-- @switch (getLayoutRequest()) {
+    @case ('vertical') {
+        <app-vertical></app-vertical>
+    }
+    @case ('horizontal') {
+        <app-horizontal></app-horizontal>
+    }
+    @case ('two-column') {
+        <app-two-column></app-two-column>
+    }
+    @default {
+        <app-vertical></app-vertical>
+    }
+  } -->

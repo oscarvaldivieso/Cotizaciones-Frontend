@@ -1,0 +1,64 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Ingresar Habitación</h5>
+            </div>
+            <div class="card-body">
+                <form (submit)="crearHabitacion()" class="needs-validation" novalidate [formGroup]="validationform">
+                    
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="tipoDeHabitacion-input"  class="form-label">Tipo de Habitación<span class="text-danger">*</span></label>
+                                <!-- <input type="text" formControlName="tipH_Id" class="form-control" [ngClass]="{'is-invalid': submit && form['tipH_Id'].errors}" placeholder="Tipo de habitación" required> -->
+                                <ng-select  bindLabel="tipH_Descripcion" [items]="tiposhab" 
+                                bindLabel="tipH_Descripcion" 
+                                bindValue="tipH_Id"
+                                placeholder="Seleccione un empleado"
+                                formControlName="tipH_Id"
+                                [ngClass]="{'is-invalid': submit && form['tipH_Id'].errors}">
+                                </ng-select>
+                                <div class="invalid-feedback">
+                                    Este campo es requerido.
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="hotel-input"  class="form-label">Hotel<span class="text-danger">*</span></label>
+                                <!-- <input type="text" formControlName="hote_Id" class="form-control" [ngClass]="{'is-invalid': submit && form['hote_Id'].errors}" placeholder="Hotel" required> -->
+                                <ng-select  bindLabel="htel_Nombre" [items]="hoteles" 
+                                bindLabel="htel_Nombre" 
+                                bindValue="htel_Id"
+                                placeholder="Seleccione un empleado"
+                                formControlName="hote_Id"
+                                [ngClass]="{'is-invalid': submit && form['hote_Id'].errors}">
+                                </ng-select>
+                                <div class="invalid-feedback">
+                                    Este campo es requerido.
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="precio-input"  class="form-label">Precio Por Noche<span class="text-danger">*</span></label>
+                                <input type="text" formControlName="habt_PrecioNoche" class="form-control" [ngClass]="{'is-invalid': submit && form['habt_PrecioNoche'].errors}" placeholder="Precio por Noche" required>
+                                <div class="invalid-feedback">
+                                    Este campo es requerido.
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                        <div class="col-lg-12">
+                            <div class="hstack gap-2 justify-content-end">
+                                <button type="button"  [routerLink]="['/acceso/roles/list']" class="btn btn-secondary"><i class="bi bi-repeat align-baseline me-1"></i> Cancelar</button>
+                                <button type="submit" class="btn btn-primary"><i class="bi bi-clipboard2-check align-baseline me-1"></i> Insertar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

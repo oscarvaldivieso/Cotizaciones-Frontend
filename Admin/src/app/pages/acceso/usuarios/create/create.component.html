@@ -1,0 +1,72 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Ingresar Usuario</h5>
+            </div>
+            <div class="card-body">
+                <form (submit)="crearUsuario()" class="needs-validation" novalidate [formGroup]="validationform">
+                    
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label for="nombre-input"  class="form-label">Usuario<span class="text-danger">*</span></label>
+                                <input type="text" formControlName="usua_Nombre" class="form-control" [ngClass]="{'is-invalid': submit && form['usua_Nombre'].errors}" placeholder="Usuario" required>
+                                <div class="invalid-feedback">
+                                    Este campo es requerido.
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label for="contrasena-input"  class="form-label">Contraseña<span class="text-danger">*</span></label>
+                                <input type="text" formControlName="usua_Contrasena"  class="form-control" [ngClass]="{'is-invalid': submit && form['usua_Contrasena'].errors}" placeholder="Contraseña" required> 
+                                <div class="invalid-feedback">
+                                    Este campo es requerido.
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label for="empleado-input"  class="form-label">Empleado<span class="text-danger">*</span></label>
+                                <!-- <input type="text" formControlName="empl_Id" [ngClass]="{'is-invalid': submit && form['empl_Id'].errors}" class="form-control" placeholder="Empleado" required> -->
+                                <ng-select  bindLabel="nombreCompleto" [items]="empleados" 
+                                bindLabel="nombreCompleto" 
+                                bindValue="empl_Id"
+                                placeholder="Seleccione un empleado"
+                                formControlName="empl_Id"
+                                [ngClass]="{'is-invalid': submit && form['empl_Id'].errors}">
+                                </ng-select>
+                                <div class="invalid-feedback">
+                                    Este campo es requerido.
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label for="rol-input"  class="form-label">Rol<span class="text-danger">*</span></label>
+                                <!-- <input type="text" formControlName="role_Id" [ngClass]="{'is-invalid': submit && form['role_Id'].errors}" class="form-control" placeholder="Rol" required> -->
+                                <ng-select  bindLabel="role_Nombre" [items]="roles" 
+                                bindLabel="role_Nombre" 
+                                bindValue="role_Id"
+                                placeholder="Seleccione un empleado"
+                                formControlName="role_Id"
+                                [ngClass]="{'is-invalid': submit && form['role_Id'].errors}">
+                                </ng-select>
+                                <div class="invalid-feedback">
+                                    Este campo es requerido.
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                        <div class="col-lg-12">
+                            <div class="hstack gap-2 justify-content-end">
+                                <button type="button"  (click)="cancelarFormulario()" class="btn btn-secondary"><i class="bi bi-repeat align-baseline me-1"></i> Cancelar</button>
+                                <button type="submit" class="btn btn-primary"><i class="bi bi-clipboard2-check align-baseline me-1"></i> Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

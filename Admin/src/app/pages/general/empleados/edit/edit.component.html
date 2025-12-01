@@ -1,0 +1,113 @@
+<form [formGroup]="editForm" (ngSubmit)="editarEmpleado()">
+    <div class="row">
+  
+      <!-- Identidad -->
+      <div class="col-lg-4">
+        <label class="form-label">Identidad <span class="text-danger">*</span></label>
+        <input type="text" formControlName="empl_Identidad" class="form-control">
+        <div class="invalid-feedback">Por favor ingrese su identidad.</div>
+      </div>
+      <br>
+
+      <!-- Nombres -->
+      <div class="col-lg-4">
+        <label class="form-label">Nombres <span class="text-danger">*</span></label>
+        <input type="text" formControlName="empl_Nombres" class="form-control">
+        <div class="invalid-feedback">Por favor ingrese sus nombres.</div>
+      </div>
+      <br>
+
+      <!-- Apellidos -->
+      <div class="col-lg-4">
+        <label class="form-label">Apellidos <span class="text-danger">*</span></label>
+        <input type="text" formControlName="empl_Apellidos" class="form-control">
+        <div class="invalid-feedback">Por favor ingrese sus apellidos.</div>
+      </div>
+      <br>
+
+      <!-- Cargo -->
+      <div class="col-lg-4">
+        <label class="form-label">Cargo <span class="text-danger">*</span></label>
+        <ng-select
+          [items]="cargos"
+          bindLabel="carg_Descripcion"
+          bindValue="carg_Id"
+          formControlName="carg_Id"
+          placeholder="Seleccione un cargo">
+        </ng-select>
+        <div class="invalid-feedback">Por favor seleccione un cargo.</div>
+      </div>
+  
+      <!-- Fecha de nacimiento -->
+      <div class="col-lg-4">
+        <label class="form-label">Fecha de Nacimiento <span class="text-danger">*</span></label>
+        <input type="date" formControlName="empl_FechaNacimiento" class="form-control">
+        <div class="invalid-feedback">Por favor ingrese su fecha de nacimiento.</div>
+      </div>
+  
+      <!-- Sexo -->
+      <div class="col-lg-4">
+        <label class="form-label">Sexo <span class="text-danger">*</span></label>
+        <select formControlName="empl_Sexo" class="form-control">
+          <option value="">Seleccione un sexo</option>
+          <option value="M">Masculino</option>
+          <option value="F">Femenino</option>
+        </select>
+        <div class="invalid-feedback">Por favor seleccione el sexo.</div>
+      </div>
+  
+      <!-- Estado civil -->
+      <div class="col-lg-4">
+        <label class="form-label">Estado Civil <span class="text-danger">*</span></label>
+        <ng-select
+          [items]="estadosCiviles"
+          bindLabel="esCi_Nombre"
+          bindValue="esCi_Id"
+          formControlName="esCi_Id"
+          placeholder="Seleccione un estado civil">
+        </ng-select>
+        <div class="invalid-feedback">Por favor seleccione el estado civil.</div>
+      </div>
+  
+      <!-- Dirección -->
+      <div class="col-lg-4">
+        <label class="form-label">Dirección <span class="text-danger">*</span></label>
+        <input type="text" formControlName="empl_Direccion" class="form-control">
+        <div class="invalid-feedback">Por favor ingrese la dirección.</div>
+      </div>
+  
+      <!-- Municipio -->
+      <div class="col-lg-4">
+        <label class="form-label">Municipio <span class="text-danger">*</span></label>
+        <ng-select
+          [items]="municipios"
+          bindLabel="muni_Nombre"
+          bindValue="muni_Codigo"
+          formControlName="muni_Codigo"
+          placeholder="Seleccione un municipio">
+        </ng-select>
+        <div class="invalid-feedback">Por favor seleccione un municipio.</div>
+      </div>
+  
+      <!-- Teléfono -->
+      <div class="col-lg-4">
+        <label class="form-label">Teléfono <span class="text-danger">*</span></label>
+        <input type="text" formControlName="empl_Telefono" class="form-control">
+        <div class="invalid-feedback">Por favor ingrese el número de teléfono.</div>
+      </div>
+  
+      <!-- Imagen -->
+      <!-- <div class="col-lg-4">
+        <label class="form-label">Imagen</label>
+        <-- Aquí puedes usar Dropzone o input file si lo prefieres -->
+        <!-- <input type="file" (change)="onFileSelected($event)" class="form-control">
+      </div> --> 
+  
+    </div>
+  
+    <div class="mt-4 d-flex justify-content-end gap-2">
+      <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancelar</button>
+      <button type="submit" class="btn btn-success"><i class="ph-pencil"></i>Guardar</button>
+    </div>
+  </form>
+  

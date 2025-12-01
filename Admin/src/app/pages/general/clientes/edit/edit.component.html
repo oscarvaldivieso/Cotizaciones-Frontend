@@ -1,0 +1,97 @@
+<form [formGroup]="editForm" (ngSubmit)="editarCliente()">
+    <div class="row">
+  
+      <!-- Identidad -->
+      <div class="col-lg-4">
+        <label class="form-label">Identidad <span class="text-danger">*</span></label>
+        <input type="text" formControlName="clie_Identidad" class="form-control">
+        <div class="invalid-feedback">Por favor ingrese su identidad.</div>
+      </div>
+  
+      <!-- Nombres -->
+      <div class="col-lg-4">
+        <label class="form-label">Nombres <span class="text-danger">*</span></label>
+        <input type="text" formControlName="clie_Nombres" class="form-control">
+        <div class="invalid-feedback">Por favor ingrese sus nombres.</div>
+      </div>
+  
+      <!-- Apellidos -->
+      <div class="col-lg-4">
+        <label class="form-label">Apellidos <span class="text-danger">*</span></label>
+        <input type="text" formControlName="clie_Apellidos" class="form-control">
+        <div class="invalid-feedback">Por favor ingrese sus apellidos.</div>
+      </div>
+  
+      <!-- Fecha de nacimiento -->
+      <div class="col-lg-4">
+        <label class="form-label">Fecha de Nacimiento <span class="text-danger">*</span></label>
+        <input type="date" formControlName="clie_FechaNacimiento" class="form-control">
+        <div class="invalid-feedback">Por favor ingrese su fecha de nacimiento.</div>
+      </div>
+  
+      <!-- Sexo -->
+      <div class="col-lg-4">
+        <label class="form-label">Sexo <span class="text-danger">*</span></label>
+        <select formControlName="clie_Sexo" class="form-control">
+          <option value="">Seleccione un sexo</option>
+          <option value="M">Masculino</option>
+          <option value="F">Femenino</option>
+        </select>
+        <div class="invalid-feedback">Por favor seleccione el sexo.</div>
+      </div>
+  
+      <!-- Estado civil -->
+      <div class="col-lg-4">
+        <label class="form-label">Estado Civil <span class="text-danger">*</span></label>
+        <ng-select
+          [items]="estadosCiviles"
+          bindLabel="esCi_Descripcion"
+          bindValue="esCi_Id"
+          formControlName="esCi_Id"
+          placeholder="Seleccione un estado civil">
+        </ng-select>
+        <div class="invalid-feedback">Por favor seleccione el estado civil.</div>
+      </div>
+  
+      <!-- Dirección -->
+      <div class="col-lg-4">
+        <label class="form-label">Dirección <span class="text-danger">*</span></label>
+        <input type="text" formControlName="clie_Direccion" class="form-control">
+        <div class="invalid-feedback">Por favor ingrese la dirección.</div>
+      </div>
+  
+      <!-- Municipio -->
+      <div class="col-lg-4">
+        <label class="form-label">Municipio <span class="text-danger">*</span></label>
+        <ng-select
+          [items]="municipios"
+          bindLabel="muni_Nombre"
+          bindValue="muni_Codigo"
+          formControlName="muni_Codigo"
+          placeholder="Seleccione un municipio">
+        </ng-select>
+        <div class="invalid-feedback">Por favor seleccione un municipio.</div>
+      </div>
+  
+      <!-- Teléfono -->
+      <div class="col-lg-4">
+        <label class="form-label">Teléfono <span class="text-danger">*</span></label>
+        <input type="text" formControlName="clie_Telefono" class="form-control">
+        <div class="invalid-feedback">Por favor ingrese el número de teléfono.</div>
+      </div>
+  
+      <!-- Imagen -->
+      <!-- <div class="col-lg-4">
+        <label class="form-label">Imagen</label>
+        <-- Aquí puedes usar Dropzone o input file si lo prefieres -->
+        <!-- <input type="file" (change)="onFileSelected($event)" class="form-control">
+      </div> --> 
+  
+    </div>
+  
+    <div class="mt-4 d-flex justify-content-end gap-2">
+      <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancelar</button>
+      <button type="submit" class="btn btn-success">Guardar</button>
+    </div>
+  </form>
+  

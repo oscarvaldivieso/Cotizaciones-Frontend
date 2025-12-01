@@ -1,0 +1,63 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Ingresar Tour</h5>
+            </div>
+            <div class="card-body">
+                <form (submit)="crearTour()" class="needs-validation" novalidate [formGroup]="validationform">
+                    
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="actividad-input"  class="form-label">Actividad<span class="text-danger">*</span></label>
+                                <!-- <input type="text" formControlName="acti_Id" id="actividad-input" [ngClass]="{'is-invalid': submit && form['acti_Id'].errors}"  class="form-control" placeholder="Actividad" required> -->
+                                <ng-select  bindLabel="acti_Descripcion" [items]="actividades" 
+                                bindLabel="acti_Descripcion" 
+                                bindValue="acti_Id"
+                                placeholder="Seleccione una actividad"
+                                formControlName="acti_Id"
+                                [ngClass]="{'is-invalid': submit && form['acti_Id'].errors}">
+                                </ng-select>
+                                <div class="invalid-feedback">
+                                    Este campo es requerido.
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="direccion-input"  class="form-label">Dirección<span class="text-danger">*</span></label>
+                                <input type="text"  id="direccion-input" formControlName="tour_Direccion"  class="form-control" [ngClass]="{'is-invalid': submit && form['tour_Direccion'].errors}"  class="form-control" placeholder="Dirección" required>
+                                <div class="invalid-feedback">
+                                    Este campo es requerido.
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="municipio-input"  class="form-label">Municipio<span class="text-danger">*</span></label>
+                                <!-- <input type="text" id="municipio-input" formControlName="muni_Codigo" [ngClass]="{'is-invalid': submit && form['muni_Codigo'].errors}" class="form-control" placeholder="Municipio" required> -->
+                                <ng-select  bindLabel="muni_Nombre" [items]="municipios" 
+                                bindLabel="muni_Nombre" 
+                                bindValue="muni_Codigo"
+                                placeholder="Seleccione un municipio"
+                                formControlName="muni_Codigo"
+                                [ngClass]="{'is-invalid': submit && form['muni_Codigo'].errors}">
+                                </ng-select>
+                                <div class="invalid-feedback">
+                                    Este campo es requerido.
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                        <div class="col-lg-12">
+                            <div class="hstack gap-2 justify-content-end">
+                                <button type="button"  (click)="cancelarFormulario()" class="btn btn-secondary"><i class="bi bi-repeat align-baseline me-1"></i> Cancelar</button>
+                                <button type="submit" class="btn btn-primary"><i class="bi bi-clipboard2-check align-baseline me-1"></i> Insertar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

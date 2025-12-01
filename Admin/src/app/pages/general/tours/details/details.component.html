@@ -1,0 +1,96 @@
+<!-- Start Breadcrumbs -->
+<app-breadcrumbs title="Detalles de Tour" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<!-- End Breadcrumbs -->
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xl-8">
+                        <div class="p-2">
+                            <a  [routerLink]="['/general/tours/list']" class="btn btn-secondary mb-3 custom-toggle float-end btn-sm">
+                                <i class="bi bi-arrow-left-circle me-1"></i> Regresar
+                              </a>
+                            <h2 >{{ tour?.acti_Nombre }}</h2>
+                            <div class="text-muted hstack gap-2 flex-wrap list-unstyled mb-4">
+                                <div >
+                                    <i class="bi bi-geo-alt align-baseline me-1 text-primary "></i> {{tour.tour_Direccion}}, {{tour.depa_Nombre}}, {{tour.muni_Nombre}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <h6 class="card-title mb-3">Detalles del tour</h6>
+                            <div class="row g-3">
+                                <div class="col-xl-6 col-sm-6">
+                                    <div class="p-3 border border-dashed rounded card-uniform-height">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="avatar-xs flex-shrink-0">
+                                                <div class="avatar-title bg-success-subtle text-success fs-lg rounded">
+                                                    <i class="ph ph-identification-card-bold"></i>
+                                                </div>
+                                            </div>
+                                            <p class="fs-md mb-0">{{tour.acti_Descripcion}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-sm-6">
+                                    <div class="p-3 border border-dashed rounded card-uniform-height">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="avatar-xs flex-shrink-0">
+                                                <div class="avatar-title bg-warning-subtle text-warning fs-lg rounded">
+                                                    <i class="ph ph-user-bold"></i>
+                                                </div>
+                                            </div>
+                                            <p class="fs-md mb-0">{{tour.tour_Direccion}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-sm-6">
+                                    <div class="p-3 border border-dashed rounded card-uniform-height">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="avatar-xs flex-shrink-0">
+                                                <div class="avatar-title bg-danger-subtle text-danger fs-lg rounded">
+                                                    <i class="ph ph-heart-bold"></i>
+                                                </div>
+                                            </div>
+                                            <p class="fs-md mb-0">{{tour.muni_Nombre}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+ 
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div><!--end col-->
+    
+</div><!--end row-->
+
+<div class="email-chat-detail" id="emailchat-detailElem">
+    <div class="card mb-0 overflow-hidden">
+        <div class="card-header align-items-center d-flex bg-primary-subtle text-primary p-3">
+            <div class="flex-grow-1">
+                <h5 class="fs-md text-primary-emphasis profile-username">Morton Satterfield</h5>
+                <p class="mb-0 fs-sm lh-1">Active</p>
+            </div>
+            <div class="flex-shrink-0">
+                <div class="mt-n1">
+                    <button type="button" class="btn btn-link btn-icon btn-sm text-primary fs-lg text-decoration-none rounded-circle bg-primary-subtle bg-opacity-10"  id="emailchat-btn-close"><i class="ri-close-fill"></i></button>
+                </div>
+            </div>
+        </div><!-- end card header -->
+    </div>
+</div>
+<!-- end email chat detail -->
+
+<style>
+    .card-uniform-height {
+    min-height: 60px; /* Ajusta este valor según lo que necesites */
+}
+</style>

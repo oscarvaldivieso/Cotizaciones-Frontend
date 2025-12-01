@@ -1,0 +1,21 @@
+<h2> LISTA DE HABITACIONES</h2>
+
+<a routerLink="/crearHabitacion"> Nuevo </a>
+<table class="table table-striped">
+    <thead>
+        <th>ID</th>
+        <th>Tipo de Habitación</th>
+        <th>Hotel</th>
+        <th>Precio Noche</th>
+        <!-- <th>Usuario</th> -->
+    </thead>
+    <tbody>
+        <tr *ngFor = "let habitacion of habitaciones">
+            <td>{{habitacion.habt_Id}}</td>
+            <td>{{habitacion.tipH_Id}}</td>
+            <td>{{habitacion.hote_Id}}</td>
+            <td>{{habitacion.habt_PrecioNoche}}</td>
+            <!-- <td>{{habitacion.usua_Creacion}}</td> -->
+        </tr>
+    </tbody>
+</table>

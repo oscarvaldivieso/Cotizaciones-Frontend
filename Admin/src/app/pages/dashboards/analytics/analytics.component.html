@@ -1,0 +1,214 @@
+<!-- Start Breadcrumbs -->
+<app-breadcrumbs title="ANALYTICS" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<!-- End Breadcrumbs -->
+
+<div class="row">
+    @for (data of widget2data; track $index) {
+    <div class="col-xl-3 col-sm-6">
+        <div class="card {{data.bgColor}} file-manager-widgets" style="background-size: 95px;background-position:right bottom;">
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-4">
+                    <div class="flex-grow-1">
+                        <div class="avatar-sm">
+                            <div class="avatar-title {{data.iconbg}} rounded fs-xl">
+                                <i class="{{data.icon}}"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <p><span class="text-{{data.color}} me-1"><i class="{{data.badge}} fs-sm align-middle"></i>
+                                {{data.percentage}}</span> {{data.caption}}</p>
+                    </div>
+                </div>
+                <h4 class="fw-semibold text-white mb-3"><span class="counter-value" [countUp]="data.counters">0</span>{{data.suffix}}
+                </h4>
+                <p class="fw-medium {{data.textcolor}} mb-0">{{data.label}}</p>
+            </div>
+        </div>
+    </div><!--end col-->
+    }
+</div><!--end row-->
+<!--end row-->
+
+<div class="row">
+    <!-- <div class="col-xl-8">
+        <div class="card">
+            <div class="card-header d-flex align-items-center flex-wrap gap-3">
+                <h5 class="card-title mb-0 flex-grow-1">Performance Overview</h5>
+                <ul class="nav nav-pills flex-shrink-0" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" data-bs-toggle="tab" href="javascript:void(0);" [class.active]="currentTab === 'pageViews'" (click)="changeTab('pageViews','1')" role="tab" aria-selected="true">
+                            Pageviews
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" data-bs-toggle="tab" href="javascript:void(0);" [class.active]="currentTab === 'Clicks'" (click)="changeTab('Clicks','2')" role="tab" aria-selected="false" tabindex="-1">
+                            Clicks
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" data-bs-toggle="tab" href="javascript:void(0);" [class.active]="currentTab === 'conversations'" (click)="changeTab('conversations','3')" role="tab" aria-selected="false" tabindex="-1">
+                            Conversations
+                        </a>
+                    </li>
+                </ul>
+            <div class="card-body ps-0">
+                <div class="tab-content text-muted">
+                    <div [hidden]="currentTab !== 'pageViews'" class="tab-pane active" id="pageViews" role="tabpanel">
+                        <div id="pageviews_overview" class="apex-charts" dir="ltr">
+                            <apx-chart [series]="pageoverviewChart.series" [chart]="pageoverviewChart.chart" [plotOptions]="pageoverviewChart.plotOptions" [stroke]="pageoverviewChart.stroke" [fill]="pageoverviewChart.fill" [dataLabels]="pageoverviewChart.dataLabels" [colors]="pageoverviewChart.colors" [legend]="pageoverviewChart.legend" [xaxis]="pageoverviewChart.xaxis" [responsive]="pageoverviewChart.responsive" dir="ltr"></apx-chart>
+                        </div>
+                    </div>
+                    <div [hidden]="currentTab !== 'Clicks'" class="tab-pane active" role="tabpanel">
+                        <div id="clicks_Chart" class="apex-charts" dir="ltr">
+                            <apx-chart [series]="clicksChart.series" [chart]="clicksChart.chart" [stroke]="clicksChart.stroke" [responsive]="clicksChart.responsive" [xaxis]="clicksChart.xaxis" [colors]="clicksChart.colors" [legend]="clicksChart.legend" [fill]="clicksChart.fill" dir="ltr"></apx-chart>
+                        </div>
+                    </div>
+                    <div [hidden]="currentTab !== 'conversations'" class="tab-pane active" role="tabpanel">
+                        <div id="column_distributed" class="apex-charts" dir="ltr">
+                            <apx-chart [series]="columnChart.series" [chart]="columnChart.chart" [plotOptions]="columnChart.plotOptions" [dataLabels]="columnChart.dataLabels" [colors]="columnChart.colors" [legend]="columnChart.legend" [xaxis]="columnChart.xaxis" dir="ltr"></apx-chart>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+
+    </div>-->
+
+    <div class="col-xxl-4 col-xl-6">
+        <div class="card">
+            <div class="card-header d-flex align-items-center">
+                <h5 class="card-title flex-grow-1 mb-0">Vuelos mas reservados</h5>
+                <div class="flex-shrink-0">
+                    <!-- <input type="text" class="form-control form-control-sm" id="exampleInputPassword1" mwlFlatpickr [(ngModel)]="currentDate" altFormat="d M, Y" dateFormat="d M, Y" mode="range" [altInput]="true" [convertModelValue]="true"> -->
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-lg-12">
+                        <div class="real-estate-widgets">
+                            <div class="tab-content text-muted">
+                                <div id="total_revenue" class="apex-charts effect-chart" dir="ltr">
+                                    <apx-chart [series]="totalrevenueChart.series" [chart]="totalrevenueChart.chart" [plotOptions]="totalrevenueChart.plotOptions" [grid]="totalrevenueChart.grid" [colors]="totalrevenueChart.colors" [fill]="totalrevenueChart.fill" [dataLabels]="totalrevenueChart.dataLabels" [yaxis]="totalrevenueChart.yaxis" [legend]="totalrevenueChart.legend" [xaxis]="totalrevenueChart.xaxis" dir="ltr"></apx-chart>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div><!--end col-->
+                </div><!--end row-->
+            </div>
+        </div>
+    </div><!--end col-->
+
+    <div class="col-xxl-4 col-xl-6">
+        <div class="card">
+            <div class="card-header d-flex align-items-center">
+                <h5 class="card-title flex-grow-1 mb-0">Hoteles mas reservados</h5>
+                <div class="flex-shrink-0">
+                    <!-- <input type="text" class="form-control form-control-sm" id="exampleInputPassword1" mwlFlatpickr [(ngModel)]="currentDate" altFormat="d M, Y" dateFormat="d M, Y" mode="range" [altInput]="true" [convertModelValue]="true"> -->
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-lg-12">
+                        <div class="real-estate-widgets">
+                            <div class="tab-content text-muted">
+                                <div id="total_revenue" class="apex-charts effect-chart" dir="ltr">
+                                    <apx-chart [series]="topHotelesChart.series" [chart]="topHotelesChart.chart" [plotOptions]="topHotelesChart.plotOptions" [grid]="topHotelesChart.grid" [colors]="topHotelesChart.colors" [fill]="topHotelesChart.fill" [dataLabels]="topHotelesChart.dataLabels" [yaxis]="topHotelesChart.yaxis" [legend]="topHotelesChart.legend" [xaxis]="topHotelesChart.xaxis" dir="ltr"></apx-chart>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div><!--end col-->
+                </div><!--end row-->
+            </div>
+        </div>
+    </div><!--end col-->
+
+
+    <div class="col-xxl-4">
+        <div class="card">
+            <div class="card-header d-flex align-items-center">
+                <h5 class="card-title flex-grow-1 mb-0">Restaurantes mas reservados</h5>
+                <div class="flex-shrink-0">
+                    <!-- <input type="text" class="form-control form-control-sm" id="exampleInputPassword1" mwlFlatpickr [(ngModel)]="currentDate" altFormat="d M, Y" dateFormat="d M, Y" mode="range" [altInput]="true" [convertModelValue]="true"> -->
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-lg-12">
+                        <div class="real-estate-widgets">
+                            <div class="tab-content text-muted">
+                                <div id="total_revenue" class="apex-charts effect-chart" dir="ltr">
+                                    <apx-chart [series]="topRestaurantesChart.series" [chart]="topRestaurantesChart.chart" [plotOptions]="topRestaurantesChart.plotOptions" [grid]="topRestaurantesChart.grid" [colors]="topRestaurantesChart.colors" [fill]="topRestaurantesChart.fill" [dataLabels]="topRestaurantesChart.dataLabels" [yaxis]="topRestaurantesChart.yaxis" [legend]="topRestaurantesChart.legend" [xaxis]="topRestaurantesChart.xaxis" dir="ltr"></apx-chart>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div><!--end col-->
+                </div><!--end row-->
+            </div>
+        </div>
+    </div><!--end col-->
+</div>
+<!--end row-->
+
+<div class="row">
+    <div class="col-xl-7 col-xl-12">
+        <div class="card card-height-100">
+            <div class="card-header d-flex align-items-center">
+                <h5 class="card-title mb-0 flex-grow-1">Municipios con mas hoteles</h5>
+                <div class="flex-shrink-0">
+                    <button type="button" class="btn btn-subtle-primary btn-sm"><i class="bi bi-file-earmark-text me-1 align-baseline"></i> Reports</button>
+                </div>
+            </div>
+            <!--end card-header-->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div id="chartdiv" style="height: 360px"></div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="mb-4">
+                            <h6 class="text-muted mb-3 fw-medium fs-xs text-uppercase">Comparechartdiv to last month</h6>
+                            <h3><span class="counter-value" [countUp]="53736"></span> <small class="text-muted fw-normal fs-sm ms-1">Users</small></h3>
+                        </div>
+                        <div>
+                            <div echarts [options]="mainChart" id="main" style="height: 265px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /col-->
+    <div class="col-xxl-5 col-xl-12 order-last order-xxl-first">
+        <div class="card">
+            <div class="card-header d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">Estados civiles que mas reservan</h4>
+                <div dropdown class="dropdown card-header-dropdown float-end">
+                    <a dropdownToggle class="text-reset dropdown-btn" href="javascript:void(0);">
+                        <i class="bi bi-three-dots-vertical"></i>
+                    </a>
+                    <div *bsDropdownMenu class="dropdown-menu dropdown-menu-end">
+                        <a class="dropdown-item" href="javascript:void(0);">Today</a>
+                        <a class="dropdown-item" href="javascript:void(0);">Last Week</a>
+                        <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
+                        <a class="dropdown-item" href="javascript:void(0);">Current Year</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div echarts [options]="propertytypeChart" id="property_type" style="height: 336px;"></div>
+            </div>
+        </div>
+    </div><!--end col-->
+</div>
+<!-- end row-->
+
+<div class="row">
+    
+    
+</div>
+<!--end row-->

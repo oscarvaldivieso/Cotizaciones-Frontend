@@ -1,0 +1,168 @@
+<!-- Custom Breadcrumb Header -->
+<app-breadcrumbs [title]="'Colaboradores'" [icon]="'ri-team-line'" [badgeIcon]="'ri-user-line'"
+    [badgeCount]="colaboradores.length" [breadcrumbItems]="[
+    { label: 'General' },
+    { label: 'Colaboradores', active: true }
+  ]">
+</app-breadcrumbs>
+
+<div class="row">
+    <div class="col-lg">
+        <!-- Toolbar: Button + Search -->
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row align-items-center justify-content-between gy-2">
+                    <!-- Left: New Button -->
+                    <div class="col-md-auto">
+                        <a routerLink="/general/colaboradores/create" class="btn btn-primary">
+                            <i class="ri-user-add-line align-baseline me-1"></i> Nuevo Colaborador
+                        </a>
+                    </div>
+
+                    <!-- Right: Search -->
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" placeholder="Buscar por nombre, código o identidad..."
+                            [(ngModel)]="searchTerm">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error Alert -->
+        <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+            <i class="ri-error-warning-line me-2"></i>
+            <strong>Error:</strong> {{ errorMessage }}
+            <button type="button" class="btn-close" (click)="errorMessage = ''"></button>
+        </div>
+
+        <!-- Loading State -->
+        <div *ngIf="isLoading" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Cargando...</span>
+            </div>
+            <p class="text-muted mt-3">Cargando colaboradores...</p>
+        </div>
+
+        <!-- Empty State -->
+        <div *ngIf="!isLoading && filteredColaboradores().length === 0" class="text-center py-5">
+            <i class="ri-user-search-line display-4 text-muted"></i>
+            <p class="text-muted mt-3 mb-0">
+                <span *ngIf="searchTerm">No se encontraron colaboradores con el término "{{ searchTerm }}"</span>
+                <span *ngIf="!searchTerm">No hay colaboradores registrados</span>
+            </p>
+        </div>
+
+        <!-- Cards Grid -->
+        <div class="row" *ngIf="!isLoading && filteredColaboradores().length > 0">
+            <div class="col-xxl-3 col-lg-4 col-md-6 mb-3" *ngFor="let colaborador of filteredColaboradores()">
+                <div class="card real-estate-grid-widgets card-animate h-100">
+                    <div class="card-body p-0">
+                        <!-- Avatar Section -->
+                        <div class="position-relative">
+                            <div class="bg-primary-subtle p-4 text-center">
+                                <img [src]="getAvatarImage(colaborador)" alt="{{ colaborador.colb_NombreCompleto }}"
+                                    class="rounded-circle avatar-xl border border-3 border-white shadow-sm">
+                            </div>
+
+                            <!-- Dropdown Menu -->
+                            <div dropdown class="dropdown position-absolute top-0 end-0 m-2">
+                                <button dropdownToggle class="btn btn-light btn-icon btn-sm shadow-sm" type="button">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                                <ul *bsDropdownMenu class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item"
+                                            [routerLink]="['/general/colaboradores/details', colaborador.colb_Id]">
+                                            <i class="bi bi-eye me-2 align-baseline"></i>Ver detalles
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item"
+                                            [routerLink]="['/general/colaboradores/edit', colaborador.colb_Id]">
+                                            <i class="bi bi-pencil-square me-2 align-baseline"></i>Editar
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item text-danger" href="javascript:void(0);"
+                                            (click)="onDelete(colaborador.colb_Id!)">
+                                            <i class="bi bi-trash3 me-2 align-baseline"></i>Eliminar
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Info Section -->
+                        <div class="p-3">
+                            <!-- Code Badge -->
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-primary-subtle text-primary fs-xxs">
+                                    <i class="ri-barcode-line align-baseline me-1"></i>{{ colaborador.colb_Codigo }}
+                                </span>
+                                <span class="badge fs-xxs" [ngClass]="getGenderBadgeClass(colaborador.colb_Sexo)">
+                                    <i [class]="getGenderIcon(colaborador.colb_Sexo) + ' align-baseline me-1'"></i>
+                                    {{ colaborador.colb_Sexo === 'F' ? 'Femenino' : 'Masculino' }}
+                                </span>
+                            </div>
+
+                            <!-- Name -->
+                            <a [routerLink]="['/general/colaboradores/details', colaborador.colb_Id]"
+                                class="text-dark text-decoration-none">
+                                <h6 class="fs-md fw-semibold text-truncate mb-2">{{ colaborador.colb_NombreCompleto }}
+                                </h6>
+                            </a>
+
+                            <!-- Info List -->
+                            <div class="vstack gap-2">
+                                <div class="d-flex align-items-center text-muted">
+                                    <i class="ri-id-card-line me-2 fs-sm"></i>
+                                    <small class="text-truncate">{{ colaborador.colb_Identidad }}</small>
+                                </div>
+                                <div class="d-flex align-items-center text-muted" *ngIf="colaborador.colb_Telefono">
+                                    <i class="ri-phone-line me-2 fs-sm"></i>
+                                    <small>{{ colaborador.colb_Telefono }}</small>
+                                </div>
+                                <div class="d-flex align-items-center text-muted" *ngIf="colaborador.cosu_DistanciaKm">
+                                    <i class="ri-map-pin-distance-line me-2 fs-sm"></i>
+                                    <small>
+                                        <span class="badge bg-info-subtle text-info">{{ colaborador.cosu_DistanciaKm }}
+                                            km</span>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Footer with Action Buttons -->
+                    <div class="card-footer bg-light border-0 p-2">
+                        <div class="d-flex gap-1">
+                            <a [routerLink]="['/general/colaboradores/details', colaborador.colb_Id]"
+                                class="btn btn-soft-primary btn-sm flex-fill">
+                                <i class="ri-eye-line align-baseline me-1"></i>Ver
+                            </a>
+                            <a [routerLink]="['/general/colaboradores/edit', colaborador.colb_Id]"
+                                class="btn btn-soft-success btn-sm flex-fill">
+                                <i class="ri-edit-line align-baseline me-1"></i>Editar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Count -->
+        <div *ngIf="!isLoading && filteredColaboradores().length > 0" class="row">
+            <div class="col-12">
+                <div class="text-center text-muted mt-3">
+                    <p class="mb-0">
+                        Mostrando <strong>{{ filteredColaboradores().length }}</strong> de <strong>{{
+                            colaboradores.length }}</strong> colaboradores
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

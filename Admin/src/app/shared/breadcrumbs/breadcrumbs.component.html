@@ -1,0 +1,55 @@
+<!-- Innovative Bootstrap-Only Breadcrumb with bg-primary -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="bg-primary rounded-3 shadow-sm p-4 position-relative overflow-hidden">
+            <!-- Decorative Elements -->
+            <div class="position-absolute top-0 end-0 opacity-25">
+                <div class="bg-white rounded-circle"
+                    style="width: 150px; height: 150px; margin-top: -50px; margin-right: -50px;"></div>
+            </div>
+
+            <!-- Content -->
+            <div class="d-flex align-items-center justify-content-between position-relative">
+                <!-- Left Section: Icon + Title + Breadcrumb -->
+                <div class="d-flex align-items-center gap-3 flex-grow-1">
+                    <!-- Icon -->
+                    <div class="bg-white bg-opacity-25 rounded-2 d-flex align-items-center justify-content-center"
+                        style="width: 56px; height: 56px; min-width: 56px;">
+                        <i [class]="icon" class="text-white fs-3"></i>
+                    </div>
+
+                    <!-- Title & Breadcrumb -->
+                    <div>
+                        <h4 class="text-white mb-1 fw-semibold">{{ title }}</h4>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb breadcrumb-sm mb-0 bg-transparent p-0">
+                                <li class="breadcrumb-item">
+                                    <a href="javascript:void(0);"
+                                        class="text-white text-opacity-75 text-decoration-none">
+                                        <i class="ri-home-4-line"></i>
+                                    </a>
+                                </li>
+                                <li *ngFor="let item of breadcrumbItems; let last = last" class="breadcrumb-item"
+                                    [class.active]="last || item.active">
+                                    <a *ngIf="!last && !item.active && item.link" [href]="item.link"
+                                        class="text-white text-opacity-75 text-decoration-none">
+                                        {{ item.label }}
+                                    </a>
+                                    <span *ngIf="!last && !item.active && !item.link"
+                                        class="text-white text-opacity-75">
+                                        {{ item.label }}
+                                    </span>
+                                    <span *ngIf="last || item.active" class="text-white fw-medium">
+                                        {{ item.label }}
+                                    </span>
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,117 @@
+<!-- Start Breadcrumbs -->
+<app-breadcrumbs title="Detalles de restaurante" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<!-- End Breadcrumbs -->
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xl-5">
+                        <div class="p-2">
+                            <a  [routerLink]="['/hotel/hoteles/list']" class="btn btn-secondary mb-3 custom-toggle float-end  btn-sm">
+                                <i class="bi bi-arrow-left-circle me-1"></i> Regresar
+                              </a>
+                            <h2 >{{ hotel?.htel_Nombre }}</h2>
+                            <div class="text-muted hstack gap-2 flex-wrap list-unstyled mb-4">
+                                <div >
+                                    <i class="bi bi-geo-alt align-baseline me-1 text-primary "></i> {{hotel.htel_Direccion}}, {{hotel.depa_Nombre}}, {{hotel.muni_Nombre}}
+                                </div>
+                            </div>
+                            <p class="text-muted mb-4 fs-6">{{hotel.htel_Descripcion}}</p>
+                        </div>
+
+                        <div class="mb-3 p-3 bg-light rounded shadow-sm">
+                            <h3 class="card-title mb-4">Servicios del restaurante</h3>
+                            <ul class="list-unstyled d-flex flex-wrap gap-2">
+                              <li *ngFor="let servicio of servicios"
+                                  class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill d-flex align-items-center fs-6">
+                                <i class="bi bi-check-circle-fill me-2 fs-5"></i> {{ servicio.serv_Descripcion }}
+                              </li>
+                            </ul>
+                        </div>
+
+                        
+                    </div>
+                    <div class="col-xl-7">
+                        <!-- Swiper -->
+                        <ngx-slick-carousel class="carousel" [config]="slidesConfig" #slickModal class="swiper property-slider mb-3">
+                            <div ngxSlickItem class="swiper-slide" style="max-height: 50vh;"*ngFor="let imagen of imagenes">
+                            <div class="position-relative ribbon-box" style="overflow: hidden; height: 100%;">
+                                <div class="ribbon ribbon-primary fw-medium rounded-end mt-2">Vista</div>
+                                <img [src]="'https://localhost:7091/images/hoteles/'+ imagen.iHot_ImgURL" alt="Imagen del restaurante" class="img-fluid" style="object-fit: cover; width: 100%; height: 100%;" />
+                            </div>
+                            </div>
+                        </ngx-slick-carousel>
+                    </div>
+                    
+                </div>
+                
+
+                
+
+                <div class="mb-3">
+                    <h6 class="card-title mb-3">Detalles del restaurante</h6>
+                    <div class="row g-3">
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="p-3 border border-dashed rounded">
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="avatar-xs flex-shrink-0">
+                                        <div class="avatar-title bg-success-subtle text-success fs-lg rounded">
+                                            <i class="ph ph-money-bold"></i>
+                                        </div>
+                                    </div>
+                                    <p class="fs-md mb-0"> {{hotel.htel_NumeroHabitaciones}} habitaciones disponibles</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="p-3 border border-dashed rounded">
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="avatar-xs flex-shrink-0">
+                                        <div class="avatar-title bg-warning-subtle text-warning fs-lg rounded">
+                                            <i class="ph ph-star-bold"></i>
+                                        </div>
+                                    </div>
+                                    <p class="fs-md mb-0">{{hotel.htel_CantidadEstrellas}} estrellas</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="p-3 border border-dashed rounded">
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="avatar-xs flex-shrink-0">
+                                        <div class="avatar-title bg-secondary-subtle text-secondary fs-lg rounded">
+                                            <i class="bi bi-map"></i>
+                                        </div>
+                                    </div>
+                                    <p class="fs-md mb-0">{{hotel.muni_Nombre}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="p-3 border border-dashed rounded">
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="avatar-xs flex-shrink-0">
+                                        <div class="avatar-title bg-primary-subtle text-primary fs-lg rounded">
+                                            <i class="ph ph-phone-call-bold"></i>
+                                        </div>
+                                    </div>
+                                    <p class="fs-md mb-0">Telefono: {{hotel.htel_Telefono}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+    </div><!--end col-->
+    
+</div><!--end row-->
+
